@@ -19,6 +19,7 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
 export default function PremiumPortfolio() {
   const [activeTab, setActiveTab] = useState<'ai' | 'data' | 'bi'>('ai');
   const [demoQuestion, setDemoQuestion] = useState('');
+  const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
 
   return (
     <div className="flex flex-col bg-[#F5F5F5] min-h-screen text-black antialiased selection:bg-black selection:text-white">
@@ -254,35 +255,95 @@ export default function PremiumPortfolio() {
                 role: 'Data Analyst Intern',
                 period: '2024',
                 result: 'Built KPI dashboards and lead scoring models that supported a 15% conversion improvement.',
-                details: ['50+ KPIs', 'BigQuery', 'Stakeholder reporting']
+                details: ['50+ KPIs', 'BigQuery', 'Stakeholder reporting'],
+                contributions: [
+                  'Designed KPI dashboards for customer engagement, conversion, and retention reporting.',
+                  'Built lead scoring analysis in BigQuery to identify stronger conversion signals.',
+                  'Translated ambiguous stakeholder questions into metric definitions and reusable reporting views.'
+                ],
+                tools: ['BigQuery', 'SQL', 'Dashboard QA', 'KPI Design'],
+                impact: 'Improved commercial visibility across 50+ KPIs and supported a 15% conversion improvement.'
               },
               {
                 company: 'CoverGo',
                 role: 'AI Quality Assurance Intern',
                 period: '2024',
                 result: 'Created validation datasets and Python checks for insurance AI workflows, reducing manual review time by 25%.',
-                details: ['200+ Q&A pairs', 'Python automation', 'NLP validation']
+                details: ['200+ Q&A pairs', 'Python automation', 'NLP validation'],
+                contributions: [
+                  'Built structured test data covering insurance-product questions, edge cases, and expected answers.',
+                  'Automated repetitive review checks with Python to make QA evidence easier to reproduce.',
+                  'Documented model-output issues so product and engineering teams could triage failures faster.'
+                ],
+                tools: ['Python', 'Pandas', 'NLP QA', 'Test Datasets'],
+                impact: 'Reduced manual AI QA review time by 25% while improving consistency across 200+ validation pairs.'
               },
               {
                 company: 'MoMo',
                 role: 'Business Intelligence Intern',
                 period: '2023',
                 result: 'Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.',
-                details: ['1M+ daily rows', '99.95% uptime', '5+ departments']
+                details: ['1M+ daily rows', '99.95% uptime', '5+ departments'],
+                contributions: [
+                  'Monitored daily reporting pipelines and helped maintain operational dashboards for business teams.',
+                  'Prepared analysis for product launches and engagement reporting across multiple departments.',
+                  'Trained stakeholders on dashboard usage, metric interpretation, and recurring reporting workflows.'
+                ],
+                tools: ['SQL', 'Excel', 'BI Dashboards', 'Data Operations'],
+                impact: 'Maintained reporting workflows over 1M+ daily rows with 99.95% uptime and trained 5+ departments.'
               }
             ].map((item) => (
-              <article key={item.company} className="grid gap-6 rounded-2xl border border-black/5 bg-white p-6 shadow-sm md:grid-cols-[12rem_1fr]">
-                <div>
-                  <div className="text-sm font-bold text-[#071A2F]">{item.company}</div>
-                  <div className="mt-1 text-xs font-mono uppercase tracking-widest text-neutral-400">{item.period}</div>
-                </div>
-                <div className="space-y-3">
-                  <h3 className="text-xl font-bold tracking-tight">{item.role}</h3>
-                  <p className="text-sm leading-relaxed text-neutral-600">{item.result}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {item.details.map((detail) => (
-                      <span key={detail} className="rounded-md border border-black/5 bg-neutral-50 px-2.5 py-1 text-xs font-mono text-neutral-500">{detail}</span>
-                    ))}
+              <article key={item.company} className="rounded-2xl border border-black/5 bg-white shadow-sm transition-shadow hover:shadow-md">
+                <button
+                  type="button"
+                  onClick={() => setExpandedExperience(expandedExperience === item.company ? null : item.company)}
+                  className="grid w-full gap-6 p-6 text-left md:grid-cols-[12rem_1fr_auto]"
+                  aria-expanded={expandedExperience === item.company}
+                >
+                  <div>
+                    <div className="text-sm font-bold text-[#071A2F]">{item.company}</div>
+                    <div className="mt-1 text-xs font-mono uppercase tracking-widest text-neutral-400">{item.period}</div>
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-bold tracking-tight">{item.role}</h3>
+                    <p className="text-sm leading-relaxed text-neutral-600">{item.result}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {item.details.map((detail) => (
+                        <span key={detail} className="rounded-md border border-black/5 bg-neutral-50 px-2.5 py-1 text-xs font-mono text-neutral-500">{detail}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#071A2F]/8 text-[#071A2F] transition-transform md:self-start" aria-hidden="true">
+                    <ArrowRight className={`h-4 w-4 transition-transform ${expandedExperience === item.company ? 'rotate-90' : ''}`} />
+                  </div>
+                </button>
+
+                <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${expandedExperience === item.company ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                  <div className="overflow-hidden">
+                    <div className="grid gap-6 border-t border-black/5 px-6 pb-6 pt-5 md:grid-cols-[12rem_1fr]">
+                      <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Key contributions</div>
+                      <div className="space-y-5">
+                        <ul className="space-y-2 text-sm leading-relaxed text-neutral-600">
+                          {item.contributions.map((contribution) => (
+                            <li key={contribution} className="flex gap-3">
+                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#071A2F]" />
+                              <span>{contribution}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="flex flex-wrap gap-2">
+                          {item.tools.map((tool) => (
+                            <span key={tool} className="rounded-full bg-[#071A2F] px-3 py-1 text-xs font-mono text-white">{tool}</span>
+                          ))}
+                        </div>
+
+                        <div className="rounded-xl bg-[#EAF1F8] p-4 text-sm font-medium leading-relaxed text-[#071A2F]">
+                          <span className="font-bold">Business impact: </span>
+                          {item.impact}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </article>
