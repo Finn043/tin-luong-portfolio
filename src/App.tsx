@@ -18,6 +18,7 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
 
 export default function PremiumPortfolio() {
   const [activeTab, setActiveTab] = useState<'ai' | 'data' | 'bi'>('ai');
+  const [demoQuestion, setDemoQuestion] = useState('');
 
   return (
     <div className="flex flex-col bg-[#F5F5F5] min-h-screen text-black antialiased selection:bg-black selection:text-white">
@@ -66,21 +67,21 @@ export default function PremiumPortfolio() {
       </nav>
 
       {/* ================= HERO SECTION ================= */}
-      <section className="min-h-screen pt-28 pb-12 px-6 flex flex-col justify-between max-w-[88rem] mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
+      <section className="pt-24 pb-10 px-6 max-w-[88rem] mx-auto w-full">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
           {/* Main Hook Headline */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="inline-flex items-center gap-2 bg-black/5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-neutral-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              Available for Data Analyst & AI roles
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 bg-[#071A2F] px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-white">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              DATA ANALYST / ANALYTICS ENGINEER
             </div>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.95]" style={{ letterSpacing: '-0.05em' }}>
-              Turning Data.<br />
-              Into <span className="text-neutral-400">Decisions.</span>
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.95]" style={{ letterSpacing: '-0.04em' }}>
+              Cleaner data.<br />
+              Faster <span className="text-neutral-400">decisions.</span>
             </h1>
             <p className="text-lg sm:text-xl text-neutral-600 max-w-2xl font-normal leading-relaxed">
-              Hi, I'm a Melbourne-based Data Analyst focused on commercial reporting, data quality, and analytics workflows. My projects cover BI dashboards, Python pipelines, public data analysis, and stakeholder-ready executive summaries.
+              Bao Tin Luong, Melbourne-based Data Analyst and Analytics Engineer. I build robust Python pipelines, BigQuery marts, and interactive dashboards to clean data, reduce noise, and deliver impactful business intelligence.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <a href="#projects" className="bg-black text-white px-6 py-3 rounded-full font-medium inline-flex items-center gap-3 group hover:bg-neutral-800 transition-all">
@@ -96,20 +97,22 @@ export default function PremiumPortfolio() {
             </div>
           </div>
 
-          {/* FinTech Aesthetic Visual Column */}
-          <div className="lg:col-span-4 relative hidden lg:block">
-            <div className="w-full h-[400px] bg-[#2B2644] rounded-2xl p-8 flex flex-col justify-between shadow-xl text-white overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl" />
-              <div className="flex justify-between items-start relative z-10">
-                <LogoIcon className="w-8 h-8 opacity-40 text-white" />
-                <span className="text-xs uppercase tracking-widest font-mono text-white/40">SYSTEM STATUS: ACTIVE</span>
+          {/* Portrait Visual Column */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative h-[420px] overflow-hidden rounded-2xl bg-[#071A2F] shadow-xl">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(135deg,#071A2F,#0C2742)]" />
+              <div className="absolute inset-x-6 top-6 flex items-center justify-between text-xs font-mono uppercase tracking-widest text-white/45">
+                <span>Melbourne VIC</span>
+                <span>Analytics Portfolio</span>
               </div>
-              <div className="space-y-2 relative z-10">
-                <div className="text-xs font-mono text-indigo-300">FEATURED PORTFOLIO</div>
-                <div className="text-3xl font-bold tracking-tight">BI, Analytics, and Data Products</div>
-                <p className="text-white/60 text-xs font-normal">
-                  Main case studies across MacroBrief, Student Insights, and ICMRA Strategic Analytics.
-                </p>
+              <img
+                src="/profile-large.png"
+                alt="Bao Tin Luong professional portrait"
+                className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20 object-cover object-[50%_40%] shadow-2xl"
+              />
+              <div className="absolute inset-x-6 bottom-6 rounded-xl border border-white/10 bg-white/10 p-4 text-white backdrop-blur-md">
+                <div className="text-sm font-semibold">Bao Tin Luong</div>
+                <div className="mt-1 text-xs text-white/65">Python pipelines, BigQuery marts, and BI dashboards.</div>
               </div>
             </div>
           </div>
@@ -248,53 +251,79 @@ export default function PremiumPortfolio() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
           {/* Main Hero Project Card - Spans 8 columns */}
-          <div className="md:col-span-8 bg-[#2B2644] text-white rounded-2xl p-8 md:p-12 flex flex-col justify-between shadow-lg relative overflow-hidden group min-h-[460px]">
-            <img
-              src="/macrobrief-looker-dashboard.png"
-              alt="MacroBrief Looker Studio dashboard preview"
-              className="absolute inset-0 h-full w-full object-cover object-top opacity-20 transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2B2644] via-[#2B2644]/90 to-[#2B2644]/70" />
-            <div className="flex justify-between items-start relative z-10">
-              <span className="text-xs font-mono px-3 py-1 bg-white/10 rounded-full backdrop-blur-md text-indigo-200">MAIN COMPLETED PROJECT</span>
-              <a href="https://github.com/Finn043/macrobrief" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all text-white" aria-label="Open MacroBrief GitHub project">
-                <ArrowUpRight className="w-5 h-5" />
-              </a>
-            </div>
+          <div className="md:col-span-8 grid min-h-[520px] overflow-hidden rounded-2xl border border-black/5 bg-white text-[#071A2F] shadow-lg lg:grid-cols-[0.42fr_0.58fr]">
+            <div className="flex flex-col justify-between gap-8 p-8 md:p-10">
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-xs font-mono px-3 py-1 bg-[#071A2F]/8 rounded-full text-[#071A2F]">MAIN COMPLETED PROJECT</span>
+                <a href="https://github.com/Finn043/macrobrief" target="_blank" rel="noreferrer" className="w-10 h-10 shrink-0 rounded-full bg-[#071A2F]/8 flex items-center justify-center hover:bg-[#071A2F] hover:text-white transition-all text-[#071A2F]" aria-label="Open MacroBrief GitHub project">
+                  <ArrowUpRight className="w-5 h-5" />
+                </a>
+              </div>
 
-            <div className="space-y-4 relative z-10 mt-20">
-              <h3 className="text-3xl md:text-5xl font-bold tracking-tight">MacroBrief</h3>
-              <p className="text-white/70 max-w-xl text-base font-normal leading-relaxed">
-                Built a repeatable economic analysis workflow that converts World Bank time series into comparison marts, a Looker Studio dashboard, and a stakeholder-ready analyst brief.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {['Python', 'World Bank API', 'Time Series', 'Looker Studio'].map((t) => (
-                  <span key={t} className="bg-white/10 text-white/90 text-xs font-mono px-2.5 py-1 rounded-md">{t}</span>
+              <div className="space-y-4">
+                <h3 className="text-3xl lg:text-4xl font-bold tracking-tight leading-tight">Cut macro brief time by 45%</h3>
+                <p className="text-slate-700 text-base font-normal leading-relaxed">
+                  MacroBrief turns World Bank time series into clean comparison marts and interactive Looker Studio dashboards for repeatable executive briefs.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {['Python', 'BigQuery', 'Looker Studio'].map((t) => (
+                    <span key={t} className="bg-[#071A2F]/8 text-[#071A2F] text-xs font-mono px-2.5 py-1 rounded-md">{t}</span>
+                  ))}
+                </div>
+                <a
+                  href="https://datastudio.google.com/reporting/91b52781-28ab-4d0d-aa12-716720592161"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-[#071A2F] hover:text-blue-700 transition-colors pt-2"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>Open dashboard</span>
+                </a>
+              </div>
+
+              <div className="rounded-xl bg-[#F5F7FA] p-4">
+                <div className="mb-3 flex items-center justify-between text-xs font-mono text-slate-500">
+                  <span>LIVE PREVIEW</span>
+                  <span>Filter open</span>
+                </div>
+                {['Australia', 'United States', 'Vietnam'].map((country, idx) => (
+                  <div key={country} className="mb-2 flex items-center justify-between rounded-md bg-white px-2 py-1.5 text-xs">
+                    <span>{country}</span>
+                    <span className={`h-1.5 rounded-full bg-[#0D3557] transition-all duration-700 hover:w-24 ${idx === 0 ? 'w-12' : idx === 1 ? 'w-16' : 'w-20'}`} />
+                  </div>
                 ))}
               </div>
-              <a
-                href="https://datastudio.google.com/reporting/91b52781-28ab-4d0d-aa12-716720592161"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-indigo-200 transition-colors pt-2"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Open dashboard</span>
-              </a>
+            </div>
+
+            <div className="relative min-h-[360px] overflow-hidden bg-[#EAF1F8] lg:min-h-full">
+              <img
+                src="/macrobrief.png"
+                alt="MacroBrief dashboard with filters and economic trend charts"
+                className="h-full w-full object-cover object-top contrast-125 saturate-110"
+              />
+              <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-20 bg-gradient-to-r from-white/80 to-transparent lg:block" />
             </div>
           </div>
 
           {/* Metric Insight Card - Spans 4 columns */}
-          <div className="md:col-span-4 bg-white border border-black/5 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
+          <div className="md:col-span-4 min-h-[520px] bg-white border border-black/5 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
             <div className="text-xs font-mono text-neutral-400 uppercase tracking-wider">Completed Focus</div>
             <div className="space-y-2 my-auto">
               <div className="text-6xl md:text-7xl font-bold tracking-tighter text-black">3</div>
               <p className="text-sm text-neutral-600 font-medium">
                 Main projects: MacroBrief, Student Insights, and ICMRA Strategic Analytics 2019-2025.
               </p>
+              <div className="mt-8 space-y-3 rounded-xl bg-[#F5F7FA] p-4">
+                {['Data Source', 'Processing', 'Marts', 'Dashboard'].map((step, idx) => (
+                  <div key={step} className="flex items-center gap-3 text-xs font-semibold text-[#071A2F]">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[10px] shadow-sm">{idx + 1}</span>
+                    <span className="flex-1 rounded-md bg-white px-3 py-2 shadow-sm">{step}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="border-t border-black/5 pt-4 text-xs font-mono text-neutral-400">
-              FEATURED FIRST
+              MACROBRIEF PIPELINE
             </div>
           </div>
 
@@ -318,9 +347,9 @@ export default function PremiumPortfolio() {
               />
             </a>
             <div className="space-y-3 mt-6">
-              <h4 className="text-2xl font-bold tracking-tight">Student Insights</h4>
+              <h4 className="text-2xl font-bold tracking-tight">FastAPI Q&A over a 520-page education corpus</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Structured a privacy-safe 520-page course corpus, identified recurring information gaps, and served searchable FAQ answers through a tested FastAPI service.
+                Structured a privacy-safe course corpus, identified recurring information gaps, and served searchable FAQ answers through a tested FastAPI service for faster student-support responses.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {['Python', 'FastAPI', 'Pandas', 'Text Processing'].map((t) => (
@@ -359,7 +388,7 @@ export default function PremiumPortfolio() {
               />
             </a>
             <div className="space-y-3 mt-6">
-              <h4 className="text-2xl font-bold tracking-tight">ICMRA Strategic Analytics 2019-2025</h4>
+              <h4 className="text-2xl font-bold tracking-tight">Board-ready fundraising analytics for 2019-2025</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
                 Created a Power BI file and executive infographic for an ICMRA fundraising performance review, covering revenue trends, campaign ROI, donor segmentation, regional revenue, and board-level actions.
               </p>
@@ -383,13 +412,13 @@ export default function PremiumPortfolio() {
           {/* In-progress Project 1 - Spans 6 columns */}
           <div className="md:col-span-6 bg-white/70 border border-dashed border-black/10 rounded-2xl p-8 flex flex-col justify-between shadow-sm min-h-[280px]">
             <div className="flex justify-between items-start">
-              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-500 rounded-full">IN PROGRESS</span>
-              <span className="text-xs font-mono text-neutral-400">NOT COMPLETE</span>
+              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-500 rounded-full">ACTIVE WORK</span>
+              <span className="text-xs font-mono text-neutral-400">BETA</span>
             </div>
             <div className="space-y-3 mt-12">
               <h4 className="text-2xl font-bold tracking-tight text-neutral-700">Automated ETL Analytics</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                BigQuery data pipeline and dashboard work are still being finalized, so this project is listed as active work rather than a completed case study.
+                BigQuery data pipeline and dashboard work are being refined with final QA evidence before being promoted to a completed case study.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {['BigQuery', 'SQL Marts', 'Looker Studio Pending', 'Pipeline QA'].map((t) => (
@@ -402,13 +431,13 @@ export default function PremiumPortfolio() {
           {/* In-progress Project 2 - Spans 6 columns */}
           <div className="md:col-span-6 bg-white/70 border border-dashed border-black/10 rounded-2xl p-8 flex flex-col justify-between shadow-sm min-h-[280px]">
             <div className="flex justify-between items-start">
-              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-500 rounded-full">IN PROGRESS</span>
-              <span className="text-xs font-mono text-neutral-400">NOT COMPLETE</span>
+              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-500 rounded-full">ACTIVE WORK</span>
+              <span className="text-xs font-mono text-neutral-400">BETA</span>
             </div>
             <div className="space-y-3 mt-12">
               <h4 className="text-2xl font-bold tracking-tight text-neutral-700">Retail Electronics Analytics</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Amazon review analytics pipeline is still being refined for final dashboard evidence and project documentation.
+                Amazon review analytics pipeline is being refined for final dashboard evidence and project documentation.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {['Python', 'JSONL Streaming', 'Data Marts', 'Dashboard Pending'].map((t) => (
@@ -421,19 +450,49 @@ export default function PremiumPortfolio() {
         </div>
       </section>
 
+      <aside className="fixed bottom-6 right-6 z-40 hidden w-80 rounded-2xl border border-white/10 bg-[#071A2F] p-4 text-white shadow-2xl lg:block">
+        <div className="mb-3 flex items-center justify-between">
+          <div className="text-xs font-mono uppercase tracking-widest text-cyan-200">FastAPI Live Demo</div>
+          <span className="rounded-full bg-white/10 px-2 py-1 text-[10px] font-mono text-white/55">Q&A Agent</span>
+        </div>
+        <label htmlFor="qa-demo" className="block text-sm font-semibold">Test my Q&A Agent</label>
+        <div className="mt-3 flex gap-2">
+          <input
+            id="qa-demo"
+            value={demoQuestion}
+            onChange={(event) => setDemoQuestion(event.target.value)}
+            placeholder="Ask about course policies..."
+            className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/35 outline-none focus:border-cyan-200"
+          />
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-[#071A2F] transition-colors hover:bg-cyan-50"
+          >
+            Run
+          </button>
+        </div>
+        <p className="mt-3 text-xs leading-relaxed text-white/55">
+          {demoQuestion ? 'Demo response ready: the agent searches indexed FAQ content and returns a cited summary.' : 'Try a quick question to preview the student FAQ workflow.'}
+        </p>
+      </aside>
+
       {/* ================= FOOTER / CONTACT AREA ================= */}
       <footer id="contact" className="bg-black text-white px-6 pt-24 pb-12 w-full mt-auto">
         <div className="max-w-[88rem] mx-auto space-y-16">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 border-b border-white/10 pb-16">
             <div className="space-y-4">
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Let's coordinate an executive sync.</h2>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Let's talk about the data work you need.</h2>
               <p className="text-white/60 text-base max-w-md font-normal">
-                Looking for a dedicated analyst or AI specialist to clean up technical operational risks? Let's drop a secure note.
+                Looking for a data analyst or analytics engineer who can clean messy data, build reliable pipelines, and ship dashboards people actually use? Send me a note.
               </p>
               <div className="flex items-center gap-4 pt-2">
-                <a href="#" className="text-white/40 hover:text-white transition-colors text-xs font-mono">GH</a>
-                <a href="#" className="text-white/40 hover:text-white transition-colors text-xs font-mono">IN</a>
+                <a href="https://github.com/Finn043" target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors text-xs font-mono" aria-label="Open GitHub profile">
+                  GH
+                </a>
+                <a href="https://www.linkedin.com/in/tin-luong-8a0908259/" target="_blank" rel="noreferrer" className="text-white/50 hover:text-white transition-colors text-xs font-mono" aria-label="Open LinkedIn profile">
+                  IN
+                </a>
               </div>
             </div>
 
@@ -441,8 +500,8 @@ export default function PremiumPortfolio() {
               <div className="text-sm font-mono text-indigo-300">DIRECT ENQUIRY ROUTE</div>
               <div className="space-y-1">
                 <div className="text-xs text-white/40 font-medium uppercase">Direct Corporate Email</div>
-                <a href="mailto:hello@baotin.dev" className="text-xl md:text-2xl font-bold text-white hover:underline block break-all tracking-tight">
-                  hello@baotin.dev
+                <a href="mailto:tin.bao.luong@gmail.com" className="text-xl md:text-2xl font-bold text-white hover:underline block break-all tracking-tight">
+                  tin.bao.luong@gmail.com
                 </a>
               </div>
               <div className="space-y-1">
