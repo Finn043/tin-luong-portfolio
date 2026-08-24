@@ -505,20 +505,29 @@ export default function PremiumPortfolio() {
               />
             </a>
             <div className="space-y-3 mt-6">
-              <h4 className="text-2xl font-bold tracking-tight">Board-ready fundraising analytics for 2019-2025</h4>
+              <h4 className="text-2xl font-bold tracking-tight">Board-ready fundraising analytics across $32.9M in pledges</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Created a Power BI file and executive infographic for an ICMRA fundraising performance review, covering revenue trends, campaign ROI, donor segmentation, regional revenue, and board-level actions.
+                Built the Power BI report, dashboard, and executive infographic for ICMRA's 2019-2025 fundraising review, covering 2,330 donors, 45,100 transactions, 1,077% campaign ROI, donor concentration risk, and board-level actions.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
-                {['Power BI', 'Fundraising Analytics', 'Donor Segmentation', 'Executive Infographic'].map((t) => (
+                {['Power BI', 'RFM Segmentation', 'CLV Analysis', 'Executive Infographic'].map((t) => (
                   <span key={t} className="bg-neutral-50 text-neutral-500 border border-black/5 text-xs font-mono px-2 py-0.5 rounded-md">{t}</span>
                 ))}
               </div>
               <a
-                href="https://github.com/Finn043/icmra-strategic-analytics"
+                href="/icmra-strategic-analytics-report.pdf"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-medium text-black hover:text-neutral-600 transition-colors pt-3"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>Open report</span>
+              </a>
+              <a
+                href="https://github.com/Finn043/icmra-strategic-analytics"
+                target="_blank"
+                rel="noreferrer"
+                className="ml-4 inline-flex items-center gap-2 text-sm font-medium text-black hover:text-neutral-600 transition-colors pt-3"
               >
                 <ExternalLink className="w-4 h-4" />
                 <span>Open GitHub</span>
