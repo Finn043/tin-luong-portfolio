@@ -360,7 +360,7 @@ export default function PremiumPortfolio() {
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Main Portfolio Projects</h2>
           </div>
           <p className="text-neutral-500 text-sm md:text-base max-w-xs font-normal">
-            Three completed analytics case studies lead the portfolio. Additional projects stay marked as active work until the evidence and documentation are complete.
+            Three analytics case studies lead the portfolio. Active work stays clearly labelled until the evidence and documentation are complete.
           </p>
         </div>
 
@@ -424,11 +424,11 @@ export default function PremiumPortfolio() {
 
           {/* Metric Insight Card - Spans 4 columns */}
           <div className="md:col-span-4 min-h-[520px] bg-white border border-black/5 rounded-2xl p-8 flex flex-col justify-between shadow-sm">
-            <div className="text-xs font-mono text-neutral-400 uppercase tracking-wider">Completed Focus</div>
+            <div className="text-xs font-mono text-neutral-400 uppercase tracking-wider">Portfolio Focus</div>
             <div className="space-y-2 my-auto">
               <div className="text-6xl md:text-7xl font-bold tracking-tighter text-black">3</div>
               <p className="text-sm text-neutral-600 font-medium">
-                Main projects: MacroBrief, Student Insights, and ICMRA Strategic Analytics 2019-2025.
+                Main projects: MacroBrief, Snowflake Revenue Mart, and ICMRA Strategic Analytics 2019-2025.
               </p>
               <div className="mt-8 space-y-3 rounded-xl bg-[#F5F7FA] p-4">
                 {['Data Source', 'Processing', 'Marts', 'Dashboard'].map((step, idx) => (
@@ -447,34 +447,34 @@ export default function PremiumPortfolio() {
           {/* Secondary Project 1 - Spans 6 columns */}
           <div className="md:col-span-6 bg-white border border-black/5 rounded-2xl p-8 flex flex-col justify-between shadow-sm hover:scale-[1.005] transition-transform min-h-[380px]">
             <div className="flex justify-between items-start">
-              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">MAIN COMPLETED PROJECT</span>
-              <span className="text-xs font-mono text-neutral-400">FASTAPI</span>
+              <span className="text-xs font-mono px-3 py-1 bg-neutral-100 text-neutral-600 rounded-full">ACTIVE WORK</span>
+              <span className="text-xs font-mono text-neutral-400">SNOWFLAKE</span>
             </div>
             <a
-              href="https://github.com/Finn043/student-insights-faq"
+              href="https://github.com/Finn043/snowflake-customer-revenue-mart"
               target="_blank"
               rel="noreferrer"
               className="block mt-8 rounded-xl overflow-hidden border border-black/5 bg-neutral-50 group/dashboard"
-              aria-label="Open Student Insights GitHub project"
+              aria-label="Open Snowflake Customer Revenue Mart GitHub project"
             >
               <img
-                src="/student-insights-dashboard.png"
-                alt="Student Insights and FAQ dashboard preview"
+                src="/snowflake-revenue-mart-preview.svg"
+                alt="Snowflake revenue mart dashboard and pipeline preview"
                 className="h-44 w-full object-cover object-top transition-transform duration-500 group-hover/dashboard:scale-[1.03]"
               />
             </a>
             <div className="space-y-3 mt-6">
-              <h4 className="text-2xl font-bold tracking-tight">FastAPI Q&A over a 520-page education corpus</h4>
+              <h4 className="text-2xl font-bold tracking-tight">Snowflake revenue mart for BI-ready customer analytics</h4>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Structured a privacy-safe course corpus, identified recurring information gaps, and served searchable FAQ answers through a tested FastAPI service for faster student-support responses.
+                Models raw customer, order, and channel spend data into Snowflake staging views and marts for monthly revenue, repeat-customer, CAC, and ROAS reporting.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
-                {['Python', 'FastAPI', 'Pandas', 'Text Processing'].map((t) => (
+                {['Snowflake', 'SQL', 'Data Modeling', 'Quality Checks'].map((t) => (
                   <span key={t} className="bg-neutral-50 text-neutral-500 border border-black/5 text-xs font-mono px-2 py-0.5 rounded-md">{t}</span>
                 ))}
               </div>
               <a
-                href="https://github.com/Finn043/student-insights-faq"
+                href="https://github.com/Finn043/snowflake-customer-revenue-mart"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-medium text-black hover:text-neutral-600 transition-colors pt-3"
@@ -578,16 +578,16 @@ export default function PremiumPortfolio() {
 
       <aside className="fixed bottom-6 right-6 z-40 hidden w-80 rounded-2xl border border-white/10 bg-[#071A2F] p-4 text-white shadow-2xl lg:block">
         <div className="mb-3 flex items-center justify-between">
-          <div className="text-xs font-mono uppercase tracking-widest text-cyan-200">FastAPI Live Demo</div>
-          <span className="rounded-full bg-white/10 px-2 py-1 text-[10px] font-mono text-white/55">Q&A Agent</span>
+          <div className="text-xs font-mono uppercase tracking-widest text-cyan-200">Snowflake Mart Preview</div>
+          <span className="rounded-full bg-white/10 px-2 py-1 text-[10px] font-mono text-white/55">SQL</span>
         </div>
-        <label htmlFor="qa-demo" className="block text-sm font-semibold">Test my Q&A Agent</label>
+        <label htmlFor="qa-demo" className="block text-sm font-semibold">Preview a BI mart query</label>
         <div className="mt-3 flex gap-2">
           <input
             id="qa-demo"
             value={demoQuestion}
             onChange={(event) => setDemoQuestion(event.target.value)}
-            placeholder="Ask about course policies..."
+            placeholder="mart_channel_performance"
             className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/35 outline-none focus:border-cyan-200"
           />
           <button
@@ -598,7 +598,7 @@ export default function PremiumPortfolio() {
           </button>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-white/55">
-          {demoQuestion ? 'Demo response ready: the agent searches indexed FAQ content and returns a cited summary.' : 'Try a quick question to preview the student FAQ workflow.'}
+          {demoQuestion ? 'Preview ready: the mart returns revenue, customers, CAC, and ROAS by channel.' : 'Try a mart name to preview the Snowflake reporting workflow.'}
         </p>
       </aside>
 
