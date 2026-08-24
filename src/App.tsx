@@ -50,6 +50,7 @@ export default function PremiumPortfolio() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600">
             <a href="#about" className="hover:text-black transition-colors">About</a>
             <a href="#expertise" className="hover:text-black transition-colors">Expertise</a>
+            <a href="#experience" className="hover:text-black transition-colors">Experience</a>
             <a href="#projects" className="hover:text-black transition-colors">Selected Work</a>
             <a href="#contact" className="hover:text-black transition-colors">Contact</a>
           </div>
@@ -232,6 +233,61 @@ export default function PremiumPortfolio() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ================= EXPERIENCE AREA ================= */}
+      <section id="experience" className="bg-[#F5F5F5] py-24 px-6 w-full">
+        <div className="max-w-[88rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-4 space-y-4">
+            <span className="text-neutral-400 text-xs font-bold uppercase tracking-widest block">Career Experience</span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Applied analytics in real teams</h2>
+            <p className="text-neutral-600 text-base leading-relaxed">
+              Internship and product-team work across customer analytics, AI validation, data operations, and stakeholder reporting.
+            </p>
+          </div>
+
+          <div className="lg:col-span-8 space-y-4">
+            {[
+              {
+                company: 'Filum.ai',
+                role: 'Data Analyst Intern',
+                period: '2024',
+                result: 'Built KPI dashboards and lead scoring models that supported a 15% conversion improvement.',
+                details: ['50+ KPIs', 'BigQuery', 'Stakeholder reporting']
+              },
+              {
+                company: 'CoverGo',
+                role: 'AI Quality Assurance Intern',
+                period: '2024',
+                result: 'Created validation datasets and Python checks for insurance AI workflows, reducing manual review time by 25%.',
+                details: ['200+ Q&A pairs', 'Python automation', 'NLP validation']
+              },
+              {
+                company: 'MoMo',
+                role: 'Business Intelligence Intern',
+                period: '2023',
+                result: 'Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.',
+                details: ['1M+ daily rows', '99.95% uptime', '5+ departments']
+              }
+            ].map((item) => (
+              <article key={item.company} className="grid gap-6 rounded-2xl border border-black/5 bg-white p-6 shadow-sm md:grid-cols-[12rem_1fr]">
+                <div>
+                  <div className="text-sm font-bold text-[#071A2F]">{item.company}</div>
+                  <div className="mt-1 text-xs font-mono uppercase tracking-widest text-neutral-400">{item.period}</div>
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-bold tracking-tight">{item.role}</h3>
+                  <p className="text-sm leading-relaxed text-neutral-600">{item.result}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.details.map((detail) => (
+                      <span key={detail} className="rounded-md border border-black/5 bg-neutral-50 px-2.5 py-1 text-xs font-mono text-neutral-500">{detail}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
