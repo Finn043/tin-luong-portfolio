@@ -266,7 +266,7 @@ export default function PremiumPortfolio() {
               },
               {
                 company: 'CoverGo',
-                role: 'AI Quality Assurance Intern',
+                role: 'AI Engineer Intern',
                 period: '2024',
                 result: 'Created validation datasets and Python checks for insurance AI workflows, reducing manual review time by 25%.',
                 details: ['200+ Q&A pairs', 'Python automation', 'NLP validation'],
