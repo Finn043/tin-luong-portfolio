@@ -29,6 +29,8 @@ GitHub: https://github.com/Finn043
 - FastAPI
 - AI validation and QA automation
 
+Projects and experience that use BigQuery: MacroBrief, Filum.ai KPI reporting and lead scoring, and Automated ETL Analytics active work. Snowflake Customer Revenue Mart uses Snowflake, not BigQuery.
+
 ## Career Experience
 
 ### Filum.ai
