@@ -7,7 +7,9 @@ import {
   Cpu,
   BarChart3,
   ExternalLink,
-  ArrowUpRight
+  ArrowUpRight,
+  MessageSquare,
+  Send
 } from 'lucide-react';
 
 const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
@@ -19,6 +21,33 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
 export default function PremiumPortfolio() {
   const [activeTab, setActiveTab] = useState<'ai' | 'data' | 'bi'>('ai');
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
+  const [assistantQuestion, setAssistantQuestion] = useState('Which project best shows analytics engineering?');
+  const [assistantAnswer, setAssistantAnswer] = useState('Ask about Bao Tin Luong’s projects, experience, tech stack, or contact details.');
+  const [assistantMode, setAssistantMode] = useState<'ready' | 'local' | 'llm'>('ready');
+  const [assistantLoading, setAssistantLoading] = useState(false);
+
+  async function handleAssistantSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const question = assistantQuestion.trim();
+    if (!question || assistantLoading) return;
+
+    setAssistantLoading(true);
+    try {
+      const response = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+      const data = await response.json();
+      setAssistantAnswer(data.answer || 'I could not find that detail in the portfolio knowledge base.');
+      setAssistantMode(data.mode === 'llm' ? 'llm' : 'local');
+    } catch {
+      setAssistantAnswer('The assistant endpoint is unavailable right now. You can still contact Bao directly at tin.bao.luong@gmail.com.');
+      setAssistantMode('local');
+    } finally {
+      setAssistantLoading(false);
+    }
+  }
 
   return (
     <div className="flex flex-col bg-[#F5F5F5] min-h-screen text-black antialiased selection:bg-black selection:text-white">
@@ -572,6 +601,65 @@ export default function PremiumPortfolio() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      <section id="assistant" className="bg-white px-6 py-20 w-full">
+        <div className="max-w-[88rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="lg:col-span-5 rounded-2xl bg-[#071A2F] p-8 text-white shadow-lg">
+            <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
+              <MessageSquare className="h-6 w-6" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Ask about my work</h2>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">
+              Query a small portfolio knowledge base covering experience, projects, tools, links, and contact details.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {['MacroBrief impact', 'CoverGo role', 'Snowflake project'].map((prompt) => (
+                <button
+                  key={prompt}
+                  type="button"
+                  onClick={() => setAssistantQuestion(prompt)}
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-mono text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 rounded-2xl border border-black/5 bg-[#F5F7FA] p-6 md:p-8 shadow-sm">
+            <form onSubmit={handleAssistantSubmit} className="flex flex-col gap-4 sm:flex-row">
+              <label htmlFor="portfolio-assistant-question" className="sr-only">Ask a portfolio question</label>
+              <input
+                id="portfolio-assistant-question"
+                value={assistantQuestion}
+                onChange={(event) => setAssistantQuestion(event.target.value)}
+                placeholder="Ask about projects, experience, or contact details..."
+                className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-neutral-400 focus:border-[#071A2F]"
+              />
+              <button
+                type="submit"
+                disabled={assistantLoading}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
+              >
+                <span>{assistantLoading ? 'Thinking' : 'Ask'}</span>
+                <Send className="h-4 w-4" />
+              </button>
+            </form>
+
+            <div className="mt-5 rounded-xl border border-black/5 bg-white p-5">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Portfolio Assistant</div>
+                <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-mono uppercase text-neutral-500">
+                  {assistantMode === 'llm' ? 'LLM' : assistantMode === 'local' ? 'Local' : 'Ready'}
+                </span>
+              </div>
+              <p className="min-h-20 whitespace-pre-line text-sm leading-relaxed text-neutral-700">
+                {assistantAnswer}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
