@@ -9,7 +9,8 @@ import {
   ExternalLink,
   ArrowUpRight,
   MessageSquare,
-  Send
+  Send,
+  X
 } from 'lucide-react';
 
 const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
@@ -25,6 +26,7 @@ export default function PremiumPortfolio() {
   const [assistantAnswer, setAssistantAnswer] = useState('Ask about Bao Tin Luong’s projects, experience, tech stack, or contact details.');
   const [assistantMode, setAssistantMode] = useState<'ready' | 'local' | 'llm'>('ready');
   const [assistantLoading, setAssistantLoading] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(false);
 
   async function handleAssistantSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -605,63 +607,102 @@ export default function PremiumPortfolio() {
       </section>
 
       <section id="assistant" className="bg-white px-6 py-20 w-full">
-        <div className="max-w-[88rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          <div className="lg:col-span-5 rounded-2xl bg-[#071A2F] p-8 text-white shadow-lg">
+        <button
+          type="button"
+          onClick={() => setAssistantOpen(true)}
+          className="group mx-auto grid w-full max-w-[88rem] grid-cols-1 overflow-hidden rounded-2xl bg-[#071A2F] text-left text-white shadow-lg transition-transform hover:scale-[1.005] lg:grid-cols-[1fr_auto]"
+          aria-haspopup="dialog"
+        >
+          <div className="p-8 md:p-10">
             <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
               <MessageSquare className="h-6 w-6" />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Ask about my work</h2>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">
-              Query a small portfolio knowledge base covering experience, projects, tools, links, and contact details.
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/60">
+              Open a portfolio assistant that can answer questions about Bao Tin Luong’s experience, projects, tools, links, and contact details.
             </p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {['MacroBrief impact', 'CoverGo role', 'Snowflake project'].map((prompt) => (
-                <button
-                  key={prompt}
-                  type="button"
-                  onClick={() => setAssistantQuestion(prompt)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-mono text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
           </div>
+          <div className="flex items-end justify-between gap-6 border-t border-white/10 p-8 md:p-10 lg:w-80 lg:flex-col lg:border-l lg:border-t-0">
+            <span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-mono uppercase text-white/65">Click to open</span>
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#071A2F] transition-transform group-hover:translate-x-1">
+              <ArrowRight className="h-5 w-5" />
+            </span>
+          </div>
+        </button>
+      </section>
 
-          <div className="lg:col-span-7 rounded-2xl border border-black/5 bg-[#F5F7FA] p-6 md:p-8 shadow-sm">
-            <form onSubmit={handleAssistantSubmit} className="flex flex-col gap-4 sm:flex-row">
-              <label htmlFor="portfolio-assistant-question" className="sr-only">Ask a portfolio question</label>
-              <input
-                id="portfolio-assistant-question"
-                value={assistantQuestion}
-                onChange={(event) => setAssistantQuestion(event.target.value)}
-                placeholder="Ask about projects, experience, or contact details..."
-                className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-neutral-400 focus:border-[#071A2F]"
-              />
-              <button
-                type="submit"
-                disabled={assistantLoading}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
-              >
-                <span>{assistantLoading ? 'Thinking' : 'Ask'}</span>
-                <Send className="h-4 w-4" />
-              </button>
-            </form>
-
-            <div className="mt-5 rounded-xl border border-black/5 bg-white p-5">
-              <div className="mb-3 flex items-center justify-between gap-3">
+      {assistantOpen && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/55 px-4 py-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="portfolio-assistant-title"
+        >
+          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
+            <div className="flex items-start justify-between gap-4 border-b border-black/5 p-6">
+              <div>
                 <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Portfolio Assistant</div>
-                <span className="rounded-full bg-neutral-100 px-2.5 py-1 text-[10px] font-mono uppercase text-neutral-500">
-                  {assistantMode === 'llm' ? 'LLM' : assistantMode === 'local' ? 'Local' : 'Ready'}
-                </span>
+                <h2 id="portfolio-assistant-title" className="mt-2 text-3xl font-bold tracking-tight">Ask about Bao’s work</h2>
               </div>
-              <p className="min-h-20 whitespace-pre-line text-sm leading-relaxed text-neutral-700">
-                {assistantAnswer}
-              </p>
+              <button
+                type="button"
+                onClick={() => setAssistantOpen(false)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-black"
+                aria-label="Close assistant"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="p-6">
+              <form onSubmit={handleAssistantSubmit} className="flex flex-col gap-4 sm:flex-row">
+                <label htmlFor="portfolio-assistant-question" className="sr-only">Ask a portfolio question</label>
+                <input
+                  id="portfolio-assistant-question"
+                  value={assistantQuestion}
+                  onChange={(event) => setAssistantQuestion(event.target.value)}
+                  placeholder="Ask about projects, experience, or contact details..."
+                  className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-neutral-400 focus:border-[#071A2F]"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  disabled={assistantLoading}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
+                >
+                  <span>{assistantLoading ? 'Thinking' : 'Ask'}</span>
+                  <Send className="h-4 w-4" />
+                </button>
+              </form>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['MacroBrief impact', 'CoverGo role', 'Snowflake project'].map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => setAssistantQuestion(prompt)}
+                    className="rounded-full border border-black/5 bg-neutral-50 px-3 py-1.5 text-xs font-mono text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-black"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+
+              <div className="mt-5 rounded-xl border border-black/5 bg-[#F5F7FA] p-5">
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Answer</div>
+                  <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-mono uppercase text-neutral-500">
+                    {assistantMode === 'llm' ? 'LLM' : assistantMode === 'local' ? 'Local' : 'Ready'}
+                  </span>
+                </div>
+                <p className="min-h-24 whitespace-pre-line text-sm leading-relaxed text-neutral-700">
+                  {assistantAnswer}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
 
       {/* ================= FOOTER / CONTACT AREA ================= */}
       <footer id="contact" className="bg-black text-white px-6 pt-24 pb-12 w-full mt-auto">
