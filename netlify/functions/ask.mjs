@@ -1,14 +1,35 @@
-import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const knowledgePath = join(dirname(fileURLToPath(import.meta.url)), 'knowledge.md');
 const headers = {
   'content-type': 'application/json',
   'access-control-allow-origin': '*',
   'access-control-allow-methods': 'POST, OPTIONS',
   'access-control-allow-headers': 'content-type'
 };
+
+const knowledge = `
+# Bao Tin Luong Portfolio Knowledge
+
+Bao Tin Luong is a Melbourne-based Data Analyst and Analytics Engineer. He builds Python pipelines, BigQuery marts, Snowflake-ready data models, and BI dashboards that clean data, reduce noise, and support business decisions.
+
+Contact: tin.bao.luong@gmail.com
+LinkedIn: https://www.linkedin.com/in/tin-luong-8a0908259/
+GitHub: https://github.com/Finn043
+
+Core skills: Python, SQL, BigQuery, Snowflake, Pandas, data modeling, data quality checks, Looker Studio, Power BI, Excel, FastAPI, AI validation and QA automation.
+
+Filum.ai: Data Analyst Intern. Built KPI dashboards and BigQuery lead scoring analysis across 50+ KPIs, supporting a 15% conversion improvement.
+
+CoverGo: AI Engineer Intern. Created validation datasets and Python checks for insurance AI workflows, reducing manual review time by 25%.
+
+MoMo: Business Intelligence Intern. Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.
+
+MacroBrief: completed analytics project using Python, BigQuery, and Looker Studio. Turns World Bank time series into comparison marts and dashboards for repeatable executive briefs. Reduced macro brief generation time by 45%. GitHub: https://github.com/Finn043/macrobrief.
+
+Snowflake Customer Revenue Mart: active work. Models customer, order, and marketing spend data into Snowflake staging views and marts for revenue, repeat-customer, CAC, and ROAS reporting. GitHub: https://github.com/Finn043/snowflake-customer-revenue-mart.
+
+ICMRA Strategic Analytics 2019-2025: completed Power BI project for fundraising review. Covered $32.9M in pledges, 2,330 donors, 45,100 transactions, 1,077% campaign ROI, donor concentration risk, and board-level actions. GitHub: https://github.com/Finn043/icmra-strategic-analytics.
+
+Active work: Automated ETL Analytics with BigQuery SQL marts and Looker Studio pending; Retail Electronics Analytics with Python, JSONL streaming, data marts, and dashboard pending.
+`;
 
 function json(statusCode, body) {
   return { statusCode, headers, body: JSON.stringify(body) };
@@ -77,7 +98,6 @@ export async function handler(event) {
   if (!question) return json(400, { error: 'Question is required.' });
   if (question.length > 400) return json(400, { error: 'Question is too long.' });
 
-  const knowledge = await readFile(knowledgePath, 'utf8');
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
