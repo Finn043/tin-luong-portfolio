@@ -38,8 +38,16 @@ function json(statusCode, body) {
 function localAnswer(question) {
   const q = question.toLowerCase();
 
-  if (q.includes('contact') || q.includes('email') || q.includes('linkedin')) {
+  if (q.includes('contact') || q.includes('email') || q.includes('linkedin') || q.includes('get in touch')) {
     return 'Bao Tin Luong is based in Melbourne, Victoria. Email: tin.bao.luong@gmail.com. LinkedIn: https://www.linkedin.com/in/tin-luong-8a0908259/. GitHub: https://github.com/Finn043.';
+  }
+
+  if (q.includes('experience') || q.includes('background')) {
+    return 'Bao has internship experience across Filum.ai, CoverGo, and MoMo: Data Analyst work on KPI dashboards and BigQuery lead scoring, AI Engineer work on insurance AI validation, and BI operations supporting 1M+ daily rows.';
+  }
+
+  if (q.includes('bigquery')) {
+    return 'MacroBrief uses BigQuery to turn World Bank time series into comparison marts for Looker Studio dashboards. Bao also used BigQuery at Filum.ai for KPI reporting and lead scoring analysis.';
   }
 
   if (q.includes('macro') || q.includes('brief')) {
