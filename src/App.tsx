@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   Mail,
@@ -8,9 +8,9 @@ import {
   BarChart3,
   ExternalLink,
   ArrowUpRight,
-  MessageSquare,
   Send,
-  X
+  X,
+  Sparkles
 } from 'lucide-react';
 
 const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
@@ -19,20 +19,38 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
   </svg>
 );
 
+type ChatMessage = {
+  role: 'assistant' | 'user';
+  text: string;
+};
+
+const initialChatMessages: ChatMessage[] = [
+  {
+    role: 'assistant',
+    text: 'Hi, I’m Bao’s portfolio assistant. Ask me about his experience, analytics projects, tech stack, or contact details.'
+  }
+];
+
 export default function PremiumPortfolio() {
   const [activeTab, setActiveTab] = useState<'ai' | 'data' | 'bi'>('ai');
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
-  const [assistantQuestion, setAssistantQuestion] = useState('Which project best shows analytics engineering?');
-  const [assistantAnswer, setAssistantAnswer] = useState('Ask about Bao Tin Luong’s projects, experience, tech stack, or contact details.');
+  const [assistantQuestion, setAssistantQuestion] = useState('');
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(initialChatMessages);
   const [assistantMode, setAssistantMode] = useState<'ready' | 'local' | 'llm'>('ready');
   const [assistantLoading, setAssistantLoading] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
+  const chatBodyRef = useRef<HTMLDivElement>(null);
 
-  async function handleAssistantSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const question = assistantQuestion.trim();
+  useEffect(() => {
+    chatBodyRef.current?.scrollTo({ top: chatBodyRef.current.scrollHeight, behavior: 'smooth' });
+  }, [chatMessages, assistantLoading]);
+
+  async function askAssistant(questionText: string) {
+    const question = questionText.trim();
     if (!question || assistantLoading) return;
 
+    setAssistantQuestion('');
+    setChatMessages((messages) => [...messages, { role: 'user', text: question }]);
     setAssistantLoading(true);
     try {
       const response = await fetch('/api/ask', {
@@ -41,14 +59,25 @@ export default function PremiumPortfolio() {
         body: JSON.stringify({ question })
       });
       const data = await response.json();
-      setAssistantAnswer(data.answer || 'I could not find that detail in the portfolio knowledge base.');
+      setChatMessages((messages) => [
+        ...messages,
+        { role: 'assistant', text: data.answer || 'I could not find that detail in the portfolio knowledge base.' }
+      ]);
       setAssistantMode(data.mode === 'llm' ? 'llm' : 'local');
     } catch {
-      setAssistantAnswer('The assistant endpoint is unavailable right now. You can still contact Bao directly at tin.bao.luong@gmail.com.');
+      setChatMessages((messages) => [
+        ...messages,
+        { role: 'assistant', text: 'The assistant endpoint is unavailable right now. You can still contact Bao directly at tin.bao.luong@gmail.com.' }
+      ]);
       setAssistantMode('local');
     } finally {
       setAssistantLoading(false);
     }
+  }
+
+  async function handleAssistantSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await askAssistant(assistantQuestion);
   }
 
   return (
@@ -606,103 +635,128 @@ export default function PremiumPortfolio() {
         </div>
       </section>
 
-      <section id="assistant" className="bg-white px-6 py-20 w-full">
-        <button
-          type="button"
-          onClick={() => setAssistantOpen(true)}
-          className="group mx-auto grid w-full max-w-[88rem] grid-cols-1 overflow-hidden rounded-2xl bg-[#071A2F] text-left text-white shadow-lg transition-transform hover:scale-[1.005] lg:grid-cols-[1fr_auto]"
-          aria-haspopup="dialog"
-        >
-          <div className="p-8 md:p-10">
-            <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
-              <MessageSquare className="h-6 w-6" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Ask about my work</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/60">
-              Open a portfolio assistant that can answer questions about Bao Tin Luong’s experience, projects, tools, links, and contact details.
-            </p>
-          </div>
-          <div className="flex items-end justify-between gap-6 border-t border-white/10 p-8 md:p-10 lg:w-80 lg:flex-col lg:border-l lg:border-t-0">
-            <span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-mono uppercase text-white/65">Click to open</span>
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#071A2F] transition-transform group-hover:translate-x-1">
-              <ArrowRight className="h-5 w-5" />
-            </span>
-          </div>
-        </button>
-      </section>
-
-      {assistantOpen && (
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 max-sm:right-4 max-sm:bottom-4">
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/55 px-4 py-6 backdrop-blur-sm"
+          className={`flex h-[min(560px,calc(100vh-7rem))] w-[calc(100vw-3rem)] max-w-[380px] flex-col overflow-hidden rounded-2xl border border-black/10 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-out sm:h-[540px] ${
+            assistantOpen
+              ? 'pointer-events-auto translate-y-0 opacity-100'
+              : 'pointer-events-none translate-y-6 opacity-0'
+          }`}
           role="dialog"
-          aria-modal="true"
-          aria-labelledby="portfolio-assistant-title"
+          aria-modal="false"
+          aria-labelledby="floating-assistant-title"
         >
-          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-start justify-between gap-4 border-b border-black/5 p-6">
+          <div className="flex items-start justify-between gap-3 border-b border-black/5 bg-[#071A2F] p-4 text-white">
+            <div className="flex items-center gap-3">
+              <img
+                src="/profile-large.png"
+                alt="Bao Tin Luong"
+                className="h-10 w-10 rounded-full border border-white/20 object-cover object-[50%_40%]"
+              />
               <div>
-                <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Portfolio Assistant</div>
-                <h2 id="portfolio-assistant-title" className="mt-2 text-3xl font-bold tracking-tight">Ask about Bao’s work</h2>
-              </div>
-              <button
-                type="button"
-                onClick={() => setAssistantOpen(false)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-black"
-                aria-label="Close assistant"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="p-6">
-              <form onSubmit={handleAssistantSubmit} className="flex flex-col gap-4 sm:flex-row">
-                <label htmlFor="portfolio-assistant-question" className="sr-only">Ask a portfolio question</label>
-                <input
-                  id="portfolio-assistant-question"
-                  value={assistantQuestion}
-                  onChange={(event) => setAssistantQuestion(event.target.value)}
-                  placeholder="Ask about projects, experience, or contact details..."
-                  className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-neutral-400 focus:border-[#071A2F]"
-                  autoFocus
-                />
-                <button
-                  type="submit"
-                  disabled={assistantLoading}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
-                >
-                  <span>{assistantLoading ? 'Thinking' : 'Ask'}</span>
-                  <Send className="h-4 w-4" />
-                </button>
-              </form>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {['MacroBrief impact', 'CoverGo role', 'Snowflake project'].map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => setAssistantQuestion(prompt)}
-                    className="rounded-full border border-black/5 bg-neutral-50 px-3 py-1.5 text-xs font-mono text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-black"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-5 rounded-xl border border-black/5 bg-[#F5F7FA] p-5">
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <div className="text-xs font-mono uppercase tracking-widest text-neutral-400">Answer</div>
-                  <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-mono uppercase text-neutral-500">
-                    {assistantMode === 'llm' ? 'LLM' : assistantMode === 'local' ? 'Local' : 'Ready'}
-                  </span>
+                <h2 id="floating-assistant-title" className="text-sm font-bold">Portfolio AI Assistant</h2>
+                <div className="mt-1 flex items-center gap-2 text-[11px] text-white/65">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  <span>Online</span>
+                  <span>Answers questions about my work & skills</span>
                 </div>
-                <p className="min-h-24 whitespace-pre-line text-sm leading-relaxed text-neutral-700">
-                  {assistantAnswer}
-                </p>
               </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAssistantOpen(false)}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+              aria-label="Close AI assistant"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div ref={chatBodyRef} className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-[#F5F7FA] p-4">
+            {chatMessages.map((message, index) => (
+              <div
+                key={`${message.role}-${index}`}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[86%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    message.role === 'user'
+                      ? 'bg-[#071A2F] text-white'
+                      : 'border border-black/5 bg-white text-neutral-700 shadow-sm'
+                  }`}
+                >
+                  {message.text}
+                </div>
+              </div>
+            ))}
+            {assistantLoading && (
+              <div className="flex justify-start">
+                <div className="rounded-2xl border border-black/5 bg-white px-4 py-3 text-sm text-neutral-500 shadow-sm">
+                  Thinking...
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="border-t border-black/5 bg-white p-4">
+            <div className="mb-3 flex flex-wrap gap-2">
+              {[
+                'Tell me about your experience',
+                'Which projects use BigQuery?',
+                'How can I get in touch?'
+              ].map((prompt) => (
+                <button
+                  key={prompt}
+                  type="button"
+                  onClick={() => askAssistant(prompt)}
+                  className="rounded-full border border-black/5 bg-neutral-50 px-3 py-1.5 text-[11px] font-mono text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-black"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+            <form onSubmit={handleAssistantSubmit} className="flex items-center gap-2">
+              <label htmlFor="floating-assistant-question" className="sr-only">Ask anything about Tin's background</label>
+              <input
+                id="floating-assistant-question"
+                value={assistantQuestion}
+                onChange={(event) => setAssistantQuestion(event.target.value)}
+                placeholder="Ask anything about Tin's background..."
+                className="min-w-0 flex-1 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-neutral-400 focus:border-[#071A2F]"
+              />
+              <button
+                type="submit"
+                disabled={assistantLoading}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#071A2F] text-white transition-colors hover:bg-[#0C2742] disabled:cursor-not-allowed disabled:bg-neutral-400"
+                aria-label="Send question"
+              >
+                <Send className="h-4 w-4" />
+              </button>
+            </form>
+            <div className="mt-2 text-right text-[10px] font-mono uppercase text-neutral-400">
+              {assistantMode === 'llm' ? 'LLM' : assistantMode === 'local' ? 'Local' : 'Ready'}
             </div>
           </div>
         </div>
-      )}
+
+        <div className="flex items-center gap-3">
+          {!assistantOpen && (
+            <div className="hidden rounded-full border border-black/5 bg-white px-3 py-2 text-xs font-semibold text-[#071A2F] shadow-lg sm:block">
+              Ask AI Assistant
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={() => setAssistantOpen((open) => !open)}
+            className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#071A2F] text-white shadow-2xl transition-transform hover:scale-105"
+            aria-label={assistantOpen ? 'Close AI assistant' : 'Ask AI Assistant'}
+            aria-expanded={assistantOpen}
+          >
+            <span className="absolute right-1 top-1 h-3 w-3 animate-pulse rounded-full bg-emerald-400 ring-4 ring-white" />
+            {assistantOpen ? <X className="h-7 w-7" /> : <Sparkles className="h-7 w-7" />}
+          </button>
+        </div>
+      </div>
 
       {/* ================= FOOTER / CONTACT AREA ================= */}
       <footer id="contact" className="bg-black text-white px-6 pt-24 pb-12 w-full mt-auto">
