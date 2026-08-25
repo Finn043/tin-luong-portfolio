@@ -22,7 +22,7 @@ Filum.ai: Data Analyst Intern. Built KPI dashboards and BigQuery lead scoring an
 
 CoverGo: AI Engineer Intern. Created validation datasets and Python checks for insurance AI workflows, reducing manual review time by 25%.
 
-MoMo: Business Intelligence Intern. Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.
+MoMo: Data Analyst Intern. Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.
 
 MacroBrief: completed analytics project using Python, BigQuery, and Looker Studio. Turns World Bank time series into comparison marts and dashboards for repeatable executive briefs. Reduced macro brief generation time by 45%. GitHub: https://github.com/Finn043/macrobrief.
 
@@ -45,7 +45,7 @@ function localAnswer(question) {
   }
 
   if (q.includes('experience') || q.includes('background')) {
-    return 'Bao has internship experience across Filum.ai, CoverGo, and MoMo: Data Analyst work on KPI dashboards and BigQuery lead scoring, AI Engineer work on insurance AI validation, and BI operations supporting 1M+ daily rows.';
+    return 'Bao has internship experience across Filum.ai, CoverGo, and MoMo: Data Analyst work on KPI dashboards, BigQuery lead scoring, reporting workflows, and data operations supporting 1M+ daily rows, plus AI Engineer work on insurance AI validation.';
   }
 
   if (q.includes('bigquery')) {
@@ -73,7 +73,7 @@ function localAnswer(question) {
   }
 
   if (q.includes('momo')) {
-    return 'At MoMo, Bao worked as a Business Intelligence Intern, supporting daily data operations over 1M+ rows with 99.95% uptime and training teams on dashboard usage.';
+    return 'At MoMo, Bao worked as a Data Analyst Intern, supporting daily data operations over 1M+ rows with 99.95% uptime and training teams on dashboard usage.';
   }
 
   if (q.includes('skill') || q.includes('stack') || q.includes('tool')) {

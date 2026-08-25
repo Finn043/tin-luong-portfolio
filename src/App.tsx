@@ -339,7 +339,7 @@ export default function PremiumPortfolio() {
               },
               {
                 company: 'MoMo',
-                role: 'Business Intelligence Intern',
+                role: 'Data Analyst Intern',
                 period: '2023',
                 result: 'Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.',
                 details: ['1M+ daily rows', '99.95% uptime', '5+ departments'],

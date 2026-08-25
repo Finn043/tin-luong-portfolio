@@ -61,7 +61,7 @@ Tools: Python, Pandas, NLP QA, test datasets.
 
 ### MoMo
 
-Role: Business Intelligence Intern.
+Role: Data Analyst Intern.
 
 Impact: Supported daily data operations over 1M+ rows with 99.95% uptime and trained teams on dashboard usage.
 
