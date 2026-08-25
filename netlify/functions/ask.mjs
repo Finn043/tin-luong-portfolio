@@ -81,17 +81,6 @@ function localAnswer(question) {
   return 'Bao Tin Luong is a Melbourne-based Data Analyst and Analytics Engineer focused on Python pipelines, BigQuery and Snowflake marts, and BI dashboards. Good questions to ask: “Which project shows analytics engineering?”, “What did Bao do at CoverGo?”, or “How can I contact Bao?”.';
 }
 
-function extractOutputText(data) {
-  if (typeof data.output_text === 'string') return data.output_text;
-
-  return data.output
-    ?.flatMap((item) => item.content ?? [])
-    ?.map((content) => content.text)
-    ?.filter(Boolean)
-    ?.join('\n')
-    ?.trim();
-}
-
 export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers };
   if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST.' });
@@ -106,7 +95,7 @@ export async function handler(event) {
   if (!question) return json(400, { error: 'Question is required.' });
   if (question.length > 400) return json(400, { error: 'Question is too long.' });
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
     return json(200, { answer: localAnswer(question), mode: 'local' });
@@ -123,16 +112,19 @@ export async function handler(event) {
   ].join('\n');
 
   try {
-    const response = await fetch('https://api.openai.com/v1/responses', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         authorization: `Bearer ${apiKey}`,
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'http-referer': 'https://tin-luong-portfolio.netlify.app',
+        'x-openrouter-title': 'Tin Luong Portfolio'
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-        max_output_tokens: 260,
-        input: [
+        model: process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini',
+        max_tokens: 260,
+        temperature: 0.2,
+        messages: [
           { role: 'system', content: system },
           { role: 'user', content: question }
         ]
@@ -142,7 +134,7 @@ export async function handler(event) {
     const data = await response.json();
     if (!response.ok) return json(200, { answer: localAnswer(question), mode: 'local' });
 
-    return json(200, { answer: extractOutputText(data) || localAnswer(question), mode: 'llm' });
+    return json(200, { answer: data.choices?.[0]?.message?.content?.trim() || localAnswer(question), mode: 'llm' });
   } catch {
     return json(200, { answer: localAnswer(question), mode: 'local' });
   }
