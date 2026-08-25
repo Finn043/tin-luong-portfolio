@@ -151,10 +151,14 @@ export default function PremiumPortfolio() {
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </a>
-              <button className="border border-black/10 bg-white hover:bg-neutral-50 px-6 py-3 rounded-full font-medium inline-flex items-center gap-2 transition-all">
+              <a
+                href="/tin-luong-resume.pdf"
+                download
+                className="border border-black/10 bg-white hover:bg-neutral-50 px-6 py-3 rounded-full font-medium inline-flex items-center gap-2 transition-all"
+              >
                 <FileText className="w-4 h-4 text-neutral-500" />
                 <span>Download Resume</span>
-              </button>
+              </a>
             </div>
           </div>
 
