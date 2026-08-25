@@ -18,7 +18,6 @@ const LogoIcon: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) =
 
 export default function PremiumPortfolio() {
   const [activeTab, setActiveTab] = useState<'ai' | 'data' | 'bi'>('ai');
-  const [demoQuestion, setDemoQuestion] = useState('');
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
 
   return (
@@ -575,32 +574,6 @@ export default function PremiumPortfolio() {
 
         </div>
       </section>
-
-      <aside className="fixed bottom-6 right-6 z-40 hidden w-80 rounded-2xl border border-white/10 bg-[#071A2F] p-4 text-white shadow-2xl lg:block">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="text-xs font-mono uppercase tracking-widest text-cyan-200">Snowflake Mart Preview</div>
-          <span className="rounded-full bg-white/10 px-2 py-1 text-[10px] font-mono text-white/55">SQL</span>
-        </div>
-        <label htmlFor="qa-demo" className="block text-sm font-semibold">Preview a BI mart query</label>
-        <div className="mt-3 flex gap-2">
-          <input
-            id="qa-demo"
-            value={demoQuestion}
-            onChange={(event) => setDemoQuestion(event.target.value)}
-            placeholder="mart_channel_performance"
-            className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/35 outline-none focus:border-cyan-200"
-          />
-          <button
-            type="button"
-            className="rounded-lg bg-white px-3 py-2 text-sm font-semibold text-[#071A2F] transition-colors hover:bg-cyan-50"
-          >
-            Run
-          </button>
-        </div>
-        <p className="mt-3 text-xs leading-relaxed text-white/55">
-          {demoQuestion ? 'Preview ready: the mart returns revenue, customers, CAC, and ROAS by channel.' : 'Try a mart name to preview the Snowflake reporting workflow.'}
-        </p>
-      </aside>
 
       {/* ================= FOOTER / CONTACT AREA ================= */}
       <footer id="contact" className="bg-black text-white px-6 pt-24 pb-12 w-full mt-auto">
