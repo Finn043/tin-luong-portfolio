@@ -13,6 +13,26 @@ const techStack = [
   ['Google Cloud', 'googlecloud', '4285f4', 'GCP']
 ];
 
+const bgVideo = document.querySelector('.bg-video');
+function startBackgroundVideo() {
+  if (!bgVideo) return;
+  bgVideo.muted = true;
+  bgVideo.defaultMuted = true;
+  bgVideo.playsInline = true;
+  bgVideo.play().catch(() => {});
+}
+if (bgVideo) {
+  bgVideo.addEventListener('canplay', () => {
+    document.body.classList.add('video-ready');
+    startBackgroundVideo();
+  }, { once: true });
+  bgVideo.addEventListener('error', () => document.body.classList.remove('video-ready'));
+  startBackgroundVideo();
+  addEventListener('pointerdown', startBackgroundVideo, { once: true });
+  addEventListener('touchstart', startBackgroundVideo, { once: true, passive: true });
+  addEventListener('pageshow', startBackgroundVideo);
+}
+
 const projects = [
   {
     title: 'MacroBrief',
