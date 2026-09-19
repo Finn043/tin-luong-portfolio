@@ -106,28 +106,37 @@ img { display: block; max-width: 100%; }
 .hero-copy .hero-actions { justify-content: flex-start; }
 .hero-copy .subhead { margin-left: 0; }
 .hero-portrait {
-  position: absolute; right: clamp(-300px, -18vw, -210px); bottom: 0;
-  z-index: 1; width: clamp(410px, 36vw, 600px); height: auto;
+  position: absolute; right: 0; bottom: clamp(10px, 2vh, 24px);
+  z-index: 1; width: clamp(250px, 27vw, 390px); aspect-ratio: 1;
   border: 0; border-radius: 0; overflow: visible; background: transparent;
-  box-shadow: none; opacity: .96;
+  box-shadow: none; opacity: .98; padding: 0; cursor: pointer;
   transform: perspective(1000px) rotateY(calc(var(--mx, 0) * -5deg)) rotateX(calc(var(--my, 0) * 3deg)) translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -6px), 0);
   transition: transform .25s ease-out, filter .25s ease-out;
 }
 .hero-portrait:hover { filter: drop-shadow(0 30px 90px rgba(255,255,255,.12)); }
-.hero-portrait::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 28%;
-  background: linear-gradient(0deg, #000 0, rgba(0,0,0,.72) 36%, transparent 100%);
-  z-index: 2; pointer-events: none;
+.mascot-stage {
+  position: relative; display: block; width: 100%; height: 100%;
+  transform-origin: 50% 78%; filter: drop-shadow(0 24px 70px rgba(0,0,0,.5));
 }
-.hero-portrait img {
-  position: relative; right: auto; bottom: auto; width: 100%;
-  max-width: none; height: auto; filter: drop-shadow(0 24px 70px rgba(0,0,0,.5));
+.mascot-layer {
+  position: absolute; inset: 0; background-size: 300% 300%; background-repeat: no-repeat;
+  background-position: 50% 50%; transition: opacity .08s linear;
 }
-.hero-portrait span {
-  position: absolute; left: 22%; bottom: 12%; z-index: 3; border-radius: 999px; padding: 10px 13px;
+.mascot-reactions { opacity: 0; }
+.hero-portrait.is-reacting .mascot-directions { opacity: 0; }
+.hero-portrait.is-reacting .mascot-reactions { opacity: 1; }
+.hero-portrait.is-booped .mascot-stage { animation: mascotBoop .42s linear; }
+.about-chip {
+  position: absolute; left: 12%; bottom: 12%; z-index: 3; border-radius: 999px; padding: 10px 13px;
   background: rgba(255,255,255,.9); color: #000; font-size: 12px; font-weight: 600;
-  box-shadow: 0 8px 30px rgba(0,0,0,.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,.3); pointer-events: none;
 }
+@keyframes mascotBoop {
+  18% { transform: scale(1.10, .86); }
+  45% { transform: scale(.95, 1.08); }
+  72% { transform: scale(1.03, .97); }
+}
+
 
 .trust-row {
   --trust-size: clamp(36px, 4.5vw, 42px);
@@ -342,10 +351,8 @@ img { display: block; max-width: 100%; }
   .hero { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding: 8px 0 20px; text-align: left; }
   .hero-copy { width: 100%; max-width: calc(100% - 12px); }
   .hero-copy .trust-row, .hero-copy .hero-actions { justify-content: flex-start; }
-  .hero-portrait { position: relative; right: auto; bottom: auto; width: min(68vw, 260px); order: 2; align-self: center; margin: -6px auto 0; opacity: .92; }
-  .hero-portrait::after { height: 24%; }
-  .hero-portrait img { position: relative; right: auto; bottom: auto; width: 100%; }
-  .hero-portrait span { left: 10%; bottom: 10%; font-size: 11px; padding: 8px 10px; }
+  .hero-portrait { position: relative; right: auto; bottom: auto; width: min(70vw, 260px); order: 2; align-self: center; margin: -6px auto 0; opacity: .96; }
+  .about-chip { left: 10%; bottom: 10%; font-size: 11px; padding: 8px 10px; }
   .trust-row { --trust-size: 34px; }
   .trust-pill { font-size: 12px; max-width: 218px; overflow: hidden; text-overflow: ellipsis; }
   .headline { font-size: clamp(38px, 10.8vw, 54px); line-height: 1.04; letter-spacing: -.08em; }

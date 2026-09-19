@@ -358,7 +358,61 @@ experienceList.addEventListener('click', (event) => {
   });
 });
 
-document.querySelector('.hero-portrait').addEventListener('click', () => aboutModal.showModal());
+const mascotButton = document.querySelector('[data-mascot]');
+const directionLayer = mascotButton?.querySelector('.mascot-directions');
+const reactionLayer = mascotButton?.querySelector('.mascot-reactions');
+const directions = ['up-left', 'up', 'up-right', 'left', 'center', 'right', 'down-left', 'down', 'down-right'];
+const reactions = ['blink', 'heart', 'sparkle', 'surprised', 'wink', 'bashful', 'sleepy', 'dizzy', 'delighted'];
+const clockwise = ['right', 'down-right', 'down', 'down-left', 'left', 'up-left', 'up', 'up-right'];
+let boops = 0;
+let lastBoop = 0;
+let reactionTimer;
+let modalTimer;
+
+function mascotCell(index) {
+  return `${(index % 3) * 50}% ${Math.floor(index / 3) * 50}%`;
+}
+
+function setMascotLayer(layer, sheet, index) {
+  if (!layer) return;
+  layer.style.backgroundImage = `url(${sheet})`;
+  layer.style.backgroundPosition = mascotCell(index);
+}
+
+if (mascotButton && directionLayer && reactionLayer) {
+  setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf('center'));
+  setMascotLayer(reactionLayer, mascotButton.dataset.reactions, 0);
+
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    addEventListener('pointermove', (event) => {
+      const box = mascotButton.getBoundingClientRect();
+      const dx = event.clientX - (box.left + box.width / 2);
+      const dy = event.clientY - (box.top + box.height / 2);
+      if (Math.hypot(dx, dy) < 70) {
+        setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf('center'));
+        return;
+      }
+      const sector = (Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) + 8) % 8;
+      setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf(clockwise[sector]));
+    }, { passive: true });
+  }
+
+  mascotButton.addEventListener('click', () => {
+    clearTimeout(reactionTimer);
+    clearTimeout(modalTimer);
+    const now = Date.now();
+    boops = now - lastBoop < 1600 ? boops + 1 : 1;
+    lastBoop = now;
+    const reaction = boops >= 4 ? 'dizzy' : ['blink', 'heart', 'sparkle', 'delighted'][(boops - 1) % 4];
+    if (boops >= 4) boops = 0;
+    setMascotLayer(reactionLayer, mascotButton.dataset.reactions, reactions.indexOf(reaction));
+    mascotButton.classList.remove('is-booped');
+    void mascotButton.offsetWidth;
+    mascotButton.classList.add('is-reacting', 'is-booped');
+    reactionTimer = setTimeout(() => mascotButton.classList.remove('is-reacting', 'is-booped'), 620);
+    modalTimer = setTimeout(() => aboutModal.showModal(), 680);
+  });
+}
 document.querySelectorAll('.modal-close').forEach((button) => {
   button.addEventListener('click', () => button.closest('dialog').close());
 });
