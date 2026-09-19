@@ -309,7 +309,7 @@ img { display: block; max-width: 100%; }
 .about-photo-caption { position: relative; z-index: 1; color: #c4c2c3; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .about-modal .modal-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(30px, 5vw, 58px); }
 .about-modal .modal-kicker { margin-bottom: 6px; }
-.about-letter { max-height: min(760px, calc(100dvh - 80px)); overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.28) transparent; }
+.about-letter { justify-content: flex-start !important; align-self: stretch; max-height: min(760px, calc(100dvh - 80px)); overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.28) transparent; }
 .about-letter::-webkit-scrollbar { width: 8px; }
 .about-letter::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: 999px; }
 .about-letter .modal-kicker { color: #fff; }
