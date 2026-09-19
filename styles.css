@@ -138,16 +138,16 @@ img { display: block; max-width: 100%; }
 .mascot-reactions { opacity: 0; }
 .mascot-button.is-reacting .mascot-directions { opacity: 0; }
 .mascot-button.is-reacting .mascot-reactions { opacity: 1; }
-.mascot-button.is-booped .mascot-stage { animation: mascotBoop .42s linear; }
+.mascot-button.is-booped .mascot-stage { filter: drop-shadow(0 24px 70px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(255,255,255,.35)); }
+.mascot-button.is-booped::after { content: ""; position: absolute; inset: 12%; border-radius: 50%; border: 1px solid rgba(255,255,255,.56); animation: mascotPulse .56s cubic-bezier(.22,1,.36,1) both; pointer-events: none; }
 .about-chip {
   position: absolute; left: 22%; bottom: 12%; z-index: 3; border-radius: 999px; padding: 10px 13px;
   background: rgba(255,255,255,.9); color: #000; font-size: 12px; font-weight: 600;
   box-shadow: 0 8px 30px rgba(0,0,0,.3); pointer-events: none;
 }
-@keyframes mascotBoop {
-  18% { transform: scale(1.10, .86); }
-  45% { transform: scale(.95, 1.08); }
-  72% { transform: scale(1.03, .97); }
+@keyframes mascotPulse {
+  from { opacity: .85; transform: scale(.86); }
+  to { opacity: 0; transform: scale(1.16); }
 }
 
 
@@ -303,9 +303,9 @@ img { display: block; max-width: 100%; }
 .empty-link { color: #c4c2c3; font-size: 14px; }
 .about-modal { width: min(1060px, calc(100vw - 28px)); }
 .about-modal-grid { display: grid; grid-template-columns: .72fr 1.28fr; min-height: 560px; }
-.about-photo { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: radial-gradient(circle at 52% 20%, rgba(255,255,255,.2), transparent 42%), linear-gradient(180deg, #1a1a1a, #000); overflow: hidden; padding: 34px; }
+.about-photo { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: radial-gradient(circle at 52% 20%, rgba(255,255,255,.2), transparent 42%), linear-gradient(180deg, #1a1a1a, #000); overflow: hidden; padding: 24px; }
 .about-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 28%; background: linear-gradient(0deg, #0b0d0f, transparent); pointer-events: none; }
-.about-mascot { z-index: 1; width: min(78%, 270px); }
+.about-mascot { z-index: 1; width: min(100%, 310px); }
 .about-photo-caption { position: relative; z-index: 1; color: #c4c2c3; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .about-modal .modal-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(30px, 5vw, 58px); }
 .about-modal .modal-kicker { margin-bottom: 6px; }
@@ -393,8 +393,8 @@ img { display: block; max-width: 100%; }
   .modal-image { height: 210px; }
   .modal-data { grid-template-columns: 1fr; }
   .about-modal-grid { grid-template-columns: 1fr; }
-  .about-photo { min-height: 280px; padding: 26px; }
-  .about-mascot { width: min(68vw, 240px); }
+  .about-photo { min-height: 280px; padding: 22px; }
+  .about-mascot { width: min(78vw, 285px); }
   .about-modal .modal-body { padding: 26px; }
 }
 

@@ -373,6 +373,7 @@ function initMascot(mascotButton) {
   const reactionLayer = mascotButton.querySelector('.mascot-reactions');
   const directions = ['up-left', 'up', 'up-right', 'left', 'center', 'right', 'down-left', 'down', 'down-right'];
   const reactions = ['blink', 'heart', 'sparkle', 'surprised', 'wink', 'bashful', 'sleepy', 'dizzy', 'delighted'];
+  const clockwise = ['right', 'down-right', 'down', 'down-left', 'left', 'up-left', 'up', 'up-right'];
   let boops = 0;
   let lastBoop = 0;
   let reactionTimer;
@@ -380,7 +381,20 @@ function initMascot(mascotButton) {
   setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf('center'));
   setMascotLayer(reactionLayer, mascotButton.dataset.reactions, 0);
 
-  // ponytail: fixed center pose; regenerate aligned sheets if cursor-follow becomes worth it.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    addEventListener('pointermove', (event) => {
+      const box = mascotButton.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      const dx = event.clientX - (box.left + box.width / 2);
+      const dy = event.clientY - (box.top + box.height / 2);
+      if (Math.hypot(dx, dy) < 70) {
+        setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf('center'));
+        return;
+      }
+      const sector = (Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) + 8) % 8;
+      setMascotLayer(directionLayer, mascotButton.dataset.directions, directions.indexOf(clockwise[sector]));
+    }, { passive: true });
+  }
 
   mascotButton.addEventListener('click', () => {
     clearTimeout(reactionTimer);
