@@ -313,7 +313,10 @@ img { display: block; max-width: 100%; }
 .about-letter::-webkit-scrollbar { width: 8px; }
 .about-letter::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: 999px; }
 .about-letter .modal-kicker { color: #fff; }
-.about-letter h2 { max-width: 10ch; }
+.about-letter-header { margin-bottom: 24px; }
+.about-letter-header h2 { max-width: none; font-size: clamp(36px, 5vw, 64px); }
+.about-letter-header p:last-child { margin-top: 12px; color: #d0d0d0; font-size: 18px; line-height: 1.45; }
+.about-letter > h2 { max-width: 10ch; }
 .letter-lead, .letter-section p { color: #d0d0d0; font-size: 16px; line-height: 1.68; max-width: 68ch; }
 .letter-lead { margin-top: 18px; }
 .letter-section h3 { margin: 0 0 14px; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .11em; }
@@ -408,7 +411,7 @@ img { display: block; max-width: 100%; }
   .about-mascot { width: min(78vw, 285px); }
   .about-modal .modal-body { padding: 26px; }
   .about-letter { max-height: none; }
-  .about-letter h2 { max-width: 11ch; }
+  .about-letter > h2 { max-width: 11ch; }
 }
 
 @media (max-width: 420px) {
