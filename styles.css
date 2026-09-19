@@ -106,14 +106,27 @@ img { display: block; max-width: 100%; }
 .hero-copy .hero-actions { justify-content: flex-start; }
 .hero-copy .subhead { margin-left: 0; }
 .hero-portrait {
-  position: absolute; right: 0; bottom: clamp(10px, 2vh, 24px);
-  z-index: 1; width: clamp(250px, 27vw, 390px); aspect-ratio: 1;
+  position: absolute; right: clamp(-180px, -9vw, -110px); bottom: 0;
+  z-index: 1; width: clamp(390px, 32vw, 520px); height: auto;
   border: 0; border-radius: 0; overflow: visible; background: transparent;
-  box-shadow: none; opacity: .98; padding: 0; cursor: pointer;
-  transform: perspective(1000px) rotateY(calc(var(--mx, 0) * -5deg)) rotateX(calc(var(--my, 0) * 3deg)) translate3d(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -6px), 0);
+  box-shadow: none; opacity: .96; padding: 0; cursor: pointer;
+  transform: perspective(1000px) rotateY(calc(var(--mx, 0) * -4deg)) rotateX(calc(var(--my, 0) * 2deg)) translate3d(calc(var(--mx, 0) * -6px), calc(var(--my, 0) * -4px), 0);
   transition: transform .25s ease-out, filter .25s ease-out;
 }
 .hero-portrait:hover { filter: drop-shadow(0 30px 90px rgba(255,255,255,.12)); }
+.hero-portrait::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+  background: linear-gradient(0deg, #000 0, rgba(0,0,0,.74) 36%, transparent 100%);
+  z-index: 2; pointer-events: none;
+}
+.hero-portrait img {
+  position: relative; z-index: 1; width: 100%; height: auto;
+  filter: drop-shadow(0 24px 70px rgba(0,0,0,.5));
+}
+.mascot-button {
+  position: relative; display: block; width: 220px; aspect-ratio: 1;
+  border: 0; background: transparent; padding: 0; cursor: pointer; flex-shrink: 0;
+}
 .mascot-stage {
   position: relative; display: block; width: 100%; height: 100%;
   transform-origin: 50% 78%; filter: drop-shadow(0 24px 70px rgba(0,0,0,.5));
@@ -123,11 +136,11 @@ img { display: block; max-width: 100%; }
   background-position: 50% 50%; transition: opacity .08s linear;
 }
 .mascot-reactions { opacity: 0; }
-.hero-portrait.is-reacting .mascot-directions { opacity: 0; }
-.hero-portrait.is-reacting .mascot-reactions { opacity: 1; }
-.hero-portrait.is-booped .mascot-stage { animation: mascotBoop .42s linear; }
+.mascot-button.is-reacting .mascot-directions { opacity: 0; }
+.mascot-button.is-reacting .mascot-reactions { opacity: 1; }
+.mascot-button.is-booped .mascot-stage { animation: mascotBoop .42s linear; }
 .about-chip {
-  position: absolute; left: 12%; bottom: 12%; z-index: 3; border-radius: 999px; padding: 10px 13px;
+  position: absolute; left: 22%; bottom: 12%; z-index: 3; border-radius: 999px; padding: 10px 13px;
   background: rgba(255,255,255,.9); color: #000; font-size: 12px; font-weight: 600;
   box-shadow: 0 8px 30px rgba(0,0,0,.3); pointer-events: none;
 }
@@ -290,9 +303,10 @@ img { display: block; max-width: 100%; }
 .empty-link { color: #c4c2c3; font-size: 14px; }
 .about-modal { width: min(1060px, calc(100vw - 28px)); }
 .about-modal-grid { display: grid; grid-template-columns: .72fr 1.28fr; min-height: 560px; }
-.about-photo { position: relative; display: flex; align-items: end; justify-content: center; background: radial-gradient(circle at 52% 20%, rgba(255,255,255,.2), transparent 42%), linear-gradient(180deg, #1a1a1a, #000); overflow: hidden; }
-.about-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 34%; background: linear-gradient(0deg, #0b0d0f, transparent); }
-.about-photo img { position: relative; z-index: 1; width: min(96%, 390px); margin-bottom: -18px; filter: drop-shadow(0 28px 80px rgba(0,0,0,.5)); }
+.about-photo { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: radial-gradient(circle at 52% 20%, rgba(255,255,255,.2), transparent 42%), linear-gradient(180deg, #1a1a1a, #000); overflow: hidden; padding: 34px; }
+.about-photo::after { content: ""; position: absolute; inset: auto 0 0; height: 28%; background: linear-gradient(0deg, #0b0d0f, transparent); pointer-events: none; }
+.about-mascot { z-index: 1; width: min(62%, 190px); }
+.about-photo-caption { position: relative; z-index: 1; color: #c4c2c3; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .about-modal .modal-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(30px, 5vw, 58px); }
 .about-modal .modal-kicker { margin-bottom: 6px; }
 .about-modal .modal-overview { font-size: 17px; }
@@ -351,7 +365,8 @@ img { display: block; max-width: 100%; }
   .hero { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 18px; padding: 8px 0 20px; text-align: left; }
   .hero-copy { width: 100%; max-width: calc(100% - 12px); }
   .hero-copy .trust-row, .hero-copy .hero-actions { justify-content: flex-start; }
-  .hero-portrait { position: relative; right: auto; bottom: auto; width: min(70vw, 260px); order: 2; align-self: center; margin: -6px auto 0; opacity: .96; }
+  .hero-portrait { position: relative; right: auto; bottom: auto; width: min(84vw, 320px); order: 2; align-self: center; margin: -18px auto 0; opacity: .96; }
+  .hero-portrait::after { height: 24%; }
   .about-chip { left: 10%; bottom: 10%; font-size: 11px; padding: 8px 10px; }
   .trust-row { --trust-size: 34px; }
   .trust-pill { font-size: 12px; max-width: 218px; overflow: hidden; text-overflow: ellipsis; }
@@ -378,7 +393,8 @@ img { display: block; max-width: 100%; }
   .modal-image { height: 210px; }
   .modal-data { grid-template-columns: 1fr; }
   .about-modal-grid { grid-template-columns: 1fr; }
-  .about-photo { min-height: 280px; }
+  .about-photo { min-height: 280px; padding: 26px; }
+  .about-mascot { width: min(52vw, 180px); }
   .about-modal .modal-body { padding: 26px; }
 }
 
@@ -392,7 +408,7 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-height: 700px) and (max-width: 720px) {
-  .hero-portrait { width: 190px; margin-top: -14px; }
+  .hero-portrait { width: 220px; margin-top: -18px; }
   .subhead { display: none; }
   .stats { gap: 8px 14px; }
 }

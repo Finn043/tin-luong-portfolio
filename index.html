@@ -78,19 +78,8 @@
             </div>
           </div>
 
-          <button
-            class="hero-portrait anim"
-            type="button"
-            style="--d: 0.08s"
-            aria-label="Boop Bao Tin Luong mascot and open introduction"
-            data-mascot
-            data-directions="mascots/bao-directions.webp"
-            data-reactions="mascots/bao-reactions.webp"
-          >
-            <span class="mascot-stage" aria-hidden="true">
-              <span class="mascot-layer mascot-directions"></span>
-              <span class="mascot-layer mascot-reactions"></span>
-            </span>
+          <button class="hero-portrait anim" type="button" style="--d: 0.08s" aria-label="Open Bao Tin Luong introduction">
+            <img src="assets/portrait.png" alt="Bao Tin Luong portrait" />
             <span class="about-chip">About me</span>
           </button>
         </main>
@@ -173,16 +162,31 @@
       <button class="modal-close" type="button" aria-label="Close introduction">×</button>
       <div class="about-modal-grid">
         <div class="about-photo">
-          <img src="assets/portrait.png" alt="Bao Tin Luong portrait" />
+          <button
+            class="mascot-button about-mascot"
+            type="button"
+            aria-label="Boop Bao Tin Luong mascot"
+            data-mascot
+            data-directions="mascots/bao-directions.webp"
+            data-reactions="mascots/bao-reactions.webp"
+          >
+            <span class="mascot-stage" aria-hidden="true">
+              <span class="mascot-layer mascot-directions"></span>
+              <span class="mascot-layer mascot-reactions"></span>
+            </span>
+          </button>
+          <p class="about-photo-caption">Interactive mascot · click for reactions</p>
         </div>
         <div class="modal-body">
           <p class="modal-kicker">About Bao</p>
-          <h2 id="about-title">Melbourne-based data analyst building practical analytics systems.</h2>
-          <p class="modal-overview">I work across Python pipelines, SQL modeling, BigQuery, Snowflake, Power BI, Looker Studio, and AI validation. My portfolio focuses on making data reliable enough for business teams to trust and clear enough for decision-makers to use.</p>
+          <h2 id="about-title">Data analyst who turns messy operations data into business-ready systems.</h2>
+          <p class="modal-overview">I am a Melbourne-based Data Analyst / Analytics Engineer focused on practical data products: Python pipelines, SQL models, BigQuery and Snowflake marts, and dashboards in Power BI, Tableau, and Looker Studio. I like work where the business question is clear, the data is messy, and the final output has to be trusted by real teams.</p>
+          <p class="modal-overview">My recent work spans KPI definitions, automated QA, lead scoring, daily data operations, and analytics delivery across product, insurance, and fintech environments.</p>
           <div class="about-points">
-            <span><strong>Focus</strong> BI dashboards, data marts, QA automation</span>
-            <span><strong>Style</strong> clear business questions before technical build</span>
-            <span><strong>Goal</strong> analyst roles across analytics and data engineering teams</span>
+            <span><strong>Strength</strong> connecting stakeholder questions to reliable data models and dashboards</span>
+            <span><strong>Tooling</strong> Python, SQL, BigQuery, Snowflake, Power BI, Tableau, Looker Studio</span>
+            <span><strong>Impact</strong> 50+ KPIs delivered, 25% QA time reduction, 1M+ daily rows supported</span>
+            <span><strong>Goal</strong> analyst roles where I can own data quality, reporting logic, and decision support</span>
           </div>
           <div class="modal-stack">
             <span>Data Analyst</span>
