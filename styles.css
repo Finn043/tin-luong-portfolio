@@ -309,11 +309,22 @@ img { display: block; max-width: 100%; }
 .about-photo-caption { position: relative; z-index: 1; color: #c4c2c3; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
 .about-modal .modal-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(30px, 5vw, 58px); }
 .about-modal .modal-kicker { margin-bottom: 6px; }
-.about-modal .modal-overview { font-size: 17px; }
-.about-modal .modal-stack { margin-top: 28px; }
-.about-points { display: grid; gap: 10px; margin-top: 24px; }
-.about-points span { display: block; border-radius: 16px; background: rgba(255,255,255,.07); padding: 13px 15px; color: #cfcfcf; line-height: 1.45; }
-.about-points strong { display: inline-block; min-width: 58px; color: #fff; text-transform: uppercase; font-size: 12px; letter-spacing: .08em; }
+.about-letter { max-height: min(760px, calc(100dvh - 80px)); overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.28) transparent; }
+.about-letter::-webkit-scrollbar { width: 8px; }
+.about-letter::-webkit-scrollbar-thumb { background: rgba(255,255,255,.24); border-radius: 999px; }
+.about-letter .modal-kicker { color: #fff; }
+.about-letter h2 { max-width: 10ch; }
+.letter-lead, .letter-section p { color: #d0d0d0; font-size: 16px; line-height: 1.68; max-width: 68ch; }
+.letter-lead { margin-top: 18px; }
+.letter-section h3 { margin: 0 0 14px; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .11em; }
+.letter-section strong { color: #fff; font-weight: 600; }
+.letter-divider { width: 100%; height: 1px; border: 0; margin: 28px 0; background: linear-gradient(90deg, rgba(255,255,255,.32), rgba(255,255,255,.06)); }
+.commitment-list { display: grid; gap: 10px; }
+.commitment-list article { border: 1px solid rgba(255,255,255,.12); border-radius: 18px; background: rgba(255,255,255,.06); padding: 16px; }
+.commitment-list span { color: #8e8e8e; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.commitment-list h4 { margin-top: 8px; color: #fff; font-size: 17px; }
+.commitment-list p { margin-top: 8px; font-size: 15px; line-height: 1.58; }
+.letter-closing .letter-signoff { color: #fff; font-weight: 600; }
 
 .anim { opacity: 0; transform: translateY(22px) scale(.98); filter: blur(6px); animation: reveal .85s cubic-bezier(.22,1,.36,1) forwards; animation-delay: var(--d, 0s); }
 .reveal { opacity: 0; transform: translateY(34px); filter: blur(8px); transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1), filter .75s cubic-bezier(.22,1,.36,1); }
@@ -396,6 +407,8 @@ img { display: block; max-width: 100%; }
   .about-photo { min-height: 280px; padding: 22px; }
   .about-mascot { width: min(78vw, 285px); }
   .about-modal .modal-body { padding: 26px; }
+  .about-letter { max-height: none; }
+  .about-letter h2 { max-width: 11ch; }
 }
 
 @media (max-width: 420px) {
