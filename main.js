@@ -101,25 +101,25 @@ const projects = [
     ]
   },
   {
-    title: 'Loan Reconciliation Demo',
-    type: 'Completed · synthetic demo',
-    image: 'assets/loan-reconciliation-preview.svg',
-    short: 'Python, Pandas, and SQL workflow comparing loan transactions with bank settlements and producing a reviewable exception queue.',
-    overview: 'A self-contained demonstration using invented loan and bank-feed records. The script validates both sources, joins unique references in SQL, flags differences, and exports repeatable reconciliation and exception files with input hashes. It is a portfolio demo, not a live lender system.',
+    title: 'Retail Electronics Analytics',
+    type: 'Completed case study',
+    image: 'assets/retail-electronics-preview.png',
+    short: 'Python pipeline that turns raw electronics reviews into product, rating, and quality insights.',
+    overview: 'A Python project built around the public Amazon Electronics review dataset. It streams JSONL records, cleans review fields, and produces reusable tables and a static dashboard for exploring product activity, rating patterns, and data quality.',
     details: [
-      'Checks for missing transactions, amount and account mismatches, duplicate references, and settlement dates that need review.',
-      'Compares amounts in integer cents and records source-file hashes so a reviewer can reproduce the same run.',
-      'Exports CSVs suitable for BI review. Accounting root causes and month-end sign-off remain human review steps.'
+      'Streams the large source file line by line and processes a configurable sample without loading the whole dataset into memory.',
+      'Builds product, monthly trend, rating distribution, review-term, and data-quality tables from the cleaned records.',
+      'Generates an executive summary and a static dashboard; review volume is treated as an engagement signal, not sales.'
     ],
-    stack: ['Python', 'Pandas', 'SQL', 'SQLite', 'CSV Controls'],
-    github: 'https://github.com/Finn043/tin-luong-portfolio/tree/main/case-studies/loan-reconciliation',
+    stack: ['Python', 'JSONL', 'CSV', 'Data Quality', 'HTML Dashboard'],
+    github: 'https://github.com/Finn043/retail-electronics-analytics',
     live: '',
     liveLabel: '',
     progress: 100,
     metrics: [
-      { value: 5, prefix: '', suffix: '', decimals: 0, label: 'exact matches · sample' },
-      { value: 6, prefix: '', suffix: '', decimals: 0, label: 'review flags · sample' },
-      { value: 2, prefix: '', suffix: '', decimals: 0, label: 'synthetic source feeds' }
+      { value: 250, prefix: '', suffix: 'K', decimals: 0, label: 'reviews processed' },
+      { value: 10378, prefix: '', suffix: '', decimals: 0, label: 'product keys' },
+      { value: 5, prefix: '', suffix: '', decimals: 0, label: 'analytics tables' }
     ]
   }
 ];
