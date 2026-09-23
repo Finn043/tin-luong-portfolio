@@ -101,25 +101,25 @@ const projects = [
     ]
   },
   {
-    title: 'Automated ETL Analytics',
-    type: 'Planned slot',
-    image: 'assets/macrobrief.png',
-    short: 'Future case-study slot for BigQuery pipeline QA, SQL marts, and dashboard documentation.',
-    overview: 'This slot is reserved for the next documented ETL analytics project. The card structure already supports overview, stack, GitHub, and live links when the project is ready.',
+    title: 'Loan Reconciliation Demo',
+    type: 'Completed · synthetic demo',
+    image: 'assets/loan-reconciliation-preview.svg',
+    short: 'Python, Pandas, and SQL workflow comparing loan transactions with bank settlements and producing a reviewable exception queue.',
+    overview: 'A self-contained demonstration using invented loan and bank-feed records. The script validates both sources, joins unique references in SQL, flags differences, and exports repeatable reconciliation and exception files with input hashes. It is a portfolio demo, not a live lender system.',
     details: [
-      'Reserved for the next project with real screenshots, links, and measurable outcomes.',
-      'The same modal layout supports future GitHub, live dashboards, PDF reports, and metric evidence.',
-      'New projects only need one data object added in main.js.'
+      'Checks for missing transactions, amount and account mismatches, duplicate references, and settlement dates that need review.',
+      'Compares amounts in integer cents and records source-file hashes so a reviewer can reproduce the same run.',
+      'Exports CSVs suitable for BI review. Accounting root causes and month-end sign-off remain human review steps.'
     ],
-    stack: ['BigQuery', 'SQL Marts', 'Pipeline QA', 'Dashboard Pending'],
-    github: '',
+    stack: ['Python', 'Pandas', 'SQL', 'SQLite', 'CSV Controls'],
+    github: 'https://github.com/Finn043/tin-luong-portfolio/tree/main/case-studies/loan-reconciliation',
     live: '',
     liveLabel: '',
-    progress: 18,
+    progress: 100,
     metrics: [
-      { text: 'Next', label: 'case study slot' },
-      { text: 'QA', label: 'evidence pending' },
-      { text: 'BI', label: 'dashboard pending' }
+      { value: 5, prefix: '', suffix: '', decimals: 0, label: 'exact matches · sample' },
+      { value: 6, prefix: '', suffix: '', decimals: 0, label: 'review flags · sample' },
+      { value: 2, prefix: '', suffix: '', decimals: 0, label: 'synthetic source feeds' }
     ]
   }
 ];
