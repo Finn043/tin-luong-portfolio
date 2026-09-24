@@ -113,8 +113,8 @@ const projects = [
     ],
     stack: ['Python', 'JSONL', 'CSV', 'Data Quality', 'HTML Dashboard'],
     github: 'https://github.com/Finn043/retail-electronics-analytics',
-    live: '',
-    liveLabel: '',
+    live: '/demos/retail-electronics/',
+    liveLabel: 'Open Dashboard',
     progress: 100,
     metrics: [
       { value: 250, prefix: '', suffix: 'K', decimals: 0, label: 'reviews processed' },
