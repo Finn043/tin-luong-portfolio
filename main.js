@@ -7,7 +7,7 @@ const techStack = [
   ['Snowflake', 'snowflake', '29b5e8', 'SF'],
   ['Looker Studio', 'looker', '4285f4', 'LS'],
   ['Excel', '', '', 'XL'],
-  ['FastAPI', 'fastapi', '009688', 'API'],
+  ['Power Query', '', '', 'PQ'],
   ['GitHub', 'github', '181717', 'GH'],
   ['Tableau', '', '', 'TAB'],
   ['Google Cloud', 'googlecloud', '4285f4', 'GCP']
@@ -35,25 +35,27 @@ if (bgVideo) {
 
 const projects = [
   {
-    title: 'MacroBrief',
+    title: 'ICMRA Strategic Analytics',
     type: 'Completed case study',
-    image: 'assets/macrobrief.png',
-    short: 'World Bank time-series pipeline, BigQuery marts, and Looker Studio dashboard for executive macro briefs.',
-    overview: 'MacroBrief turns public World Bank indicators into clean comparison marts and a dashboard workflow for repeatable executive briefs across Australia, Vietnam, and the United States.',
+    image: 'assets/icmra-executive-infographic.png',
+    short: 'Power BI and Power Query reporting across 45,100 transactions, with data-quality checks and board-level risk analysis.',
+    overview: 'Built a Power BI reporting suite and executive infographic for ICMRA fundraising analytics from 2019 to 2025. Power Query cleaning and type enforcement prepared 45,100 transaction rows for donor, campaign, concentration-risk, and board-level analysis.',
     details: [
-      'Pulled World Bank indicators into a repeatable Python/Pandas pipeline.',
-      'Modeled country comparison tables for Looker Studio and executive summaries.',
-      'Documented the dashboard workflow so future indicators can be added without redesigning the report.'
+      'Used Power Query to clean source data, enforce data types, and prepare a repeatable reporting model.',
+      'Assessed data quality across 45,100 transaction rows before building KPI and segmentation views.',
+      'Translated campaign performance, donor concentration, and revenue risk into board-ready visuals and actions.'
     ],
-    stack: ['Python', 'Pandas', 'BigQuery', 'Looker Studio', 'World Bank API'],
-    github: 'https://github.com/Finn043/macrobrief',
-    live: 'https://datastudio.google.com/reporting/91b52781-28ab-4d0d-aa12-716720592161',
-    liveLabel: 'Open Dashboard',
+    stack: ['Power BI', 'Power Query', 'Data Quality', 'BI Modeling', 'Executive Reporting'],
+    github: 'https://github.com/Finn043/icmra-strategic-analytics',
+    live: 'assets/icmra-strategic-analytics-report.pdf',
+    liveLabel: 'Open Analysis Report',
+    download: 'public/fin-bi-powerbi-dashboard.pbix',
+    downloadLabel: 'Download PBIX',
     progress: 100,
     metrics: [
-      { value: 45, prefix: '', suffix: '%', decimals: 0, label: 'brief-time reduction' },
-      { value: 500, prefix: '', suffix: 'K+', decimals: 0, label: 'daily-ready records' },
-      { value: 3, prefix: '', suffix: '', decimals: 0, label: 'countries compared' }
+      { value: 32.9, prefix: '$', suffix: 'M', decimals: 1, label: 'pledges analyzed' },
+      { value: 2330, prefix: '', suffix: '', decimals: 0, label: 'donors' },
+      { value: 45100, prefix: '', suffix: '', decimals: 0, label: 'transactions validated' }
     ]
   },
   {
@@ -79,25 +81,25 @@ const projects = [
     ]
   },
   {
-    title: 'ICMRA Strategic Analytics',
+    title: 'MacroBrief',
     type: 'Completed case study',
-    image: 'assets/icmra-executive-infographic.png',
-    short: 'Power BI reporting and executive infographic for fundraising performance, donor risk, and board-level actions.',
-    overview: 'Built a Power BI report and executive infographic for ICMRA fundraising analytics from 2019 to 2025, covering donor concentration, campaign ROI, RFM segmentation, and recommended board actions.',
+    image: 'assets/macrobrief.png',
+    short: 'World Bank time-series pipeline, BigQuery marts, and Looker Studio dashboard for executive macro briefs.',
+    overview: 'MacroBrief turns public World Bank indicators into clean comparison marts and a dashboard workflow for repeatable executive briefs across Australia, Vietnam, and the United States.',
     details: [
-      'Analyzed donor performance, campaign ROI, and transaction patterns from 2019 to 2025.',
-      'Translated fundraising risk into board-friendly visuals and action priorities.',
-      'Used RFM and CLV-style segmentation to make donor groups easier to compare.'
+      'Pulled World Bank indicators into a repeatable Python/Pandas pipeline.',
+      'Modeled country comparison tables for Looker Studio and executive summaries.',
+      'Documented the dashboard workflow so future indicators can be added without redesigning the report.'
     ],
-    stack: ['Power BI', 'RFM Segmentation', 'CLV Analysis', 'Executive Reporting'],
-    github: 'https://github.com/Finn043/icmra-strategic-analytics',
-    live: 'assets/icmra-strategic-analytics-report.pdf',
-    liveLabel: 'Open Report',
+    stack: ['Python', 'Pandas', 'BigQuery', 'Looker Studio', 'World Bank API'],
+    github: 'https://github.com/Finn043/macrobrief',
+    live: 'https://datastudio.google.com/reporting/91b52781-28ab-4d0d-aa12-716720592161',
+    liveLabel: 'Open Dashboard',
     progress: 100,
     metrics: [
-      { value: 32.9, prefix: '$', suffix: 'M', decimals: 1, label: 'pledges analyzed' },
-      { value: 2330, prefix: '', suffix: '', decimals: 0, label: 'donors' },
-      { value: 45100, prefix: '', suffix: '', decimals: 0, label: 'transactions' }
+      { value: 45, prefix: '', suffix: '%', decimals: 0, label: 'brief-time reduction' },
+      { value: 500, prefix: '', suffix: 'K+', decimals: 0, label: 'daily-ready records' },
+      { value: 3, prefix: '', suffix: '', decimals: 0, label: 'countries compared' }
     ]
   },
   {
@@ -315,7 +317,8 @@ projectGrid.addEventListener('click', (event) => {
   modal.querySelector('.modal-stack').innerHTML = project.stack.map((item) => `<span>${item}</span>`).join('');
   modal.querySelector('.modal-links').innerHTML = [
     project.github ? `<a href="${project.github}" target="_blank" rel="noreferrer">GitHub</a>` : '',
-    project.live ? `<a href="${project.live}" target="_blank" rel="noreferrer">${project.liveLabel}</a>` : ''
+    project.live ? `<a href="${project.live}" target="_blank" rel="noreferrer">${project.liveLabel}</a>` : '',
+    project.download ? `<a href="${project.download}" download>${project.downloadLabel}</a>` : ''
   ].join('') || '<span class="empty-link">Links will be added when the project is published.</span>';
   modal.showModal();
   animateModalMetrics();
